@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhb.platform.dao.JbdpUserMapper">
+  <resultMap id="BaseResultMap" type="com.dhb.platform.entity.JbdpUser">
+    <id column="USER_ID" jdbcType="VARCHAR" property="userId" />
+    <result column="TARGET_ID" jdbcType="VARCHAR" property="targetId" />
+    <result column="JBDP_TYPE" jdbcType="VARCHAR" property="jbdpType" />
+    <result column="ACCOUNT" jdbcType="VARCHAR" property="account" />
+    <result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+    <result column="STATE" jdbcType="SMALLINT" property="state" />
+    <result column="DEL_FLAG" jdbcType="SMALLINT" property="delFlag" />
+    <result column="DEF1" jdbcType="VARCHAR" property="def1" />
+    <result column="DEF2" jdbcType="VARCHAR" property="def2" />
+    <result column="USER_NAME" jdbcType="VARCHAR" property="userName" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    USER_ID, TARGET_ID, JBDP_TYPE, ACCOUNT, PASSWORD, STATE, DEL_FLAG, DEF1, DEF2, USER_NAME
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jbdp_user
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectByIdAndPass" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jbdp_user
+	where 1=1
+	<if test="userId != null and userId != ''">
+		and ACCOUNT = '${userId}'
+	</if>
+	<if test="password != null and password != ''">
+		and PASSWORD = '${password}'
+	</if>
+  </select>
+  <select id="selectUsersByParams" parameterType="java.util.Map" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jbdp_user
+	where 1=1
+	<if test="userId != null and userId != ''">
+		and ACCOUNT = '${userId}'
+	</if>
+	<if test="password != null and password != ''">
+		and PASSWORD = '${password}'
+	</if>
+  </select>
+  <select id="selectAllUsersByMybatis" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from jbdp_user
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from jbdp_user
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.dhb.platform.entity.JbdpUser" keyProperty="userId">
+    <!-- uuid生成主键 -->
+  	<selectKey keyProperty="userId" resultType="String" order="BEFORE">
+  		select  replace(uuid(),'-','')   from dual
+  	</selectKey>
+    insert into jbdp_user (USER_ID, TARGET_ID, JBDP_TYPE, ACCOUNT, PASSWORD, STATE, DEL_FLAG, DEF1, DEF2, USER_NAME)
+    values (#{userId,jdbcType=VARCHAR}, #{targetId,jdbcType=VARCHAR}, #{jbdpType,jdbcType=VARCHAR}, 
+      #{account,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{state,jdbcType=SMALLINT}, 
+      #{delFlag,jdbcType=SMALLINT}, #{def1,jdbcType=VARCHAR}, #{def2,jdbcType=VARCHAR}, 
+      #{userName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhb.platform.entity.JbdpUser">
+    insert into jbdp_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        USER_ID,
+      </if>
+      <if test="targetId != null">
+        TARGET_ID,
+      </if>
+      <if test="jbdpType != null">
+        JBDP_TYPE,
+      </if>
+      <if test="account != null">
+        ACCOUNT,
+      </if>
+      <if test="password != null">
+        PASSWORD,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG,
+      </if>
+      <if test="def1 != null">
+        DEF1,
+      </if>
+      <if test="def2 != null">
+        DEF2,
+      </if>
+      <if test="userName != null">
+        USER_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="targetId != null">
+        #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="jbdpType != null">
+        #{jbdpType,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="delFlag != null">
+        #{delFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="def1 != null">
+        #{def1,jdbcType=VARCHAR},
+      </if>
+      <if test="def2 != null">
+        #{def2,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dhb.platform.entity.JbdpUser">
+    update jbdp_user
+    <set>
+      <if test="targetId != null">
+        TARGET_ID = #{targetId,jdbcType=VARCHAR},
+      </if>
+      <if test="jbdpType != null">
+        JBDP_TYPE = #{jbdpType,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        ACCOUNT = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        PASSWORD = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        STATE = #{state,jdbcType=SMALLINT},
+      </if>
+      <if test="delFlag != null">
+        DEL_FLAG = #{delFlag,jdbcType=SMALLINT},
+      </if>
+      <if test="def1 != null">
+        DEF1 = #{def1,jdbcType=VARCHAR},
+      </if>
+      <if test="def2 != null">
+        DEF2 = #{def2,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        USER_NAME = #{userName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dhb.platform.entity.JbdpUser">
+    update jbdp_user
+    set TARGET_ID = #{targetId,jdbcType=VARCHAR},
+      JBDP_TYPE = #{jbdpType,jdbcType=VARCHAR},
+      ACCOUNT = #{account,jdbcType=VARCHAR},
+      PASSWORD = #{password,jdbcType=VARCHAR},
+      STATE = #{state,jdbcType=SMALLINT},
+      DEL_FLAG = #{delFlag,jdbcType=SMALLINT},
+      DEF1 = #{def1,jdbcType=VARCHAR},
+      DEF2 = #{def2,jdbcType=VARCHAR},
+      USER_NAME = #{userName,jdbcType=VARCHAR}
+    where USER_ID = #{userId,jdbcType=VARCHAR}
+  </update>
+</mapper>

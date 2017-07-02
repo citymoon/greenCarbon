@@ -4,20 +4,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.jasper.tagplugins.jstl.core.Redirect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhb.platform.entity.JbdpUser;
-import com.dhb.platform.entity.User;
 import com.dhb.platform.service.IUserInfoService;
 
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	
+	private static final Logger log = LoggerFactory.getLogger(LoginController.class);
 	
 	@Resource
 	HttpServletRequest request;
@@ -38,6 +39,7 @@ public class LoginController {
 	
 	@RequestMapping("/loginto")
 	public ModelAndView valideLogin(Model model){
+		log.debug("loginto start....");
 		String loginPageUrl = "index";
 		String successPageUrl = "success";
 		

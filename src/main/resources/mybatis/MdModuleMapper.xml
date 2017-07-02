@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhb.platform.dao.MdModuleMapper">
+  <resultMap id="BaseResultMap" type="com.dhb.platform.entity.MdModule">
+    <result column="ROW_ID" jdbcType="DECIMAL" property="rowId" />
+    <result column="MD_NAME" jdbcType="VARCHAR" property="mdName" />
+    <result column="MD_CODE" jdbcType="VARCHAR" property="mdCode" />
+    <result column="PARENT_ROWID" jdbcType="VARCHAR" property="parentRowid" />
+    <result column="SELECTED_FLAG" jdbcType="DECIMAL" property="selectedFlag" />
+    <result column="MD_NEW_NAME" jdbcType="VARCHAR" property="mdNewName" />
+    <result column="SHOW_SEQUENCE" jdbcType="DECIMAL" property="showSequence" />
+    <result column="MD_URL" jdbcType="VARCHAR" property="mdUrl" />
+    <result column="IS_SYSTEM_MD" jdbcType="DECIMAL" property="isSystemMd" />
+    <result column="HAVE_CHILD" jdbcType="DECIMAL" property="haveChild" />
+    <result column="INTRANET_FLAG" jdbcType="DECIMAL" property="intranetFlag" />
+    <result column="OASYS_FLAG" jdbcType="DECIMAL" property="oasysFlag" />
+    <result column="ACTIVE_FLAG" jdbcType="DECIMAL" property="activeFlag" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+    <result column="LAST_UPDATE_BY" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="UPDATE_COUNT" jdbcType="DECIMAL" property="updateCount" />
+    <result column="ATTRIBUTE01" jdbcType="VARCHAR" property="attribute01" />
+    <result column="ATTRIBUTE02" jdbcType="VARCHAR" property="attribute02" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      ROW_ID, MD_NAME, MD_CODE,PARENT_ROWID, SELECTED_FLAG, MD_NEW_NAME,
+      SHOW_SEQUENCE, MD_URL, IS_SYSTEM_MD,HAVE_CHILD, INTRANET_FLAG, OASYS_FLAG,
+      ACTIVE_FLAG, CREATE_DATE, CREATE_BY,LAST_UPDATE_DATE, LAST_UPDATE_BY, UPDATE_COUNT,
+      ATTRIBUTE01, ATTRIBUTE02
+  </sql>
+  <select id="selectModuleByParams" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MD_MODULE
+    where PARENT_ROWID = #{parentRowid,jdbcType=VARCHAR} and ACTIVE_FLAG = '1'
+    ORDER BY SHOW_SEQUENCE ASC
+  </select>
+  <insert id="insert" parameterType="com.dhb.platform.entity.MdModule">
+    insert into MD_MODULE (ROW_ID, MD_NAME, MD_CODE, 
+      PARENT_ROWID, SELECTED_FLAG, MD_NEW_NAME, 
+      SHOW_SEQUENCE, MD_URL, IS_SYSTEM_MD, 
+      HAVE_CHILD, INTRANET_FLAG, OASYS_FLAG, 
+      ACTIVE_FLAG, CREATE_DATE, CREATE_BY, 
+      LAST_UPDATE_DATE, LAST_UPDATE_BY, UPDATE_COUNT, 
+      ATTRIBUTE01, ATTRIBUTE02)
+    values (#{rowId,jdbcType=DECIMAL}, #{mdName,jdbcType=VARCHAR}, #{mdCode,jdbcType=VARCHAR}, 
+      #{parentRowid,jdbcType=VARCHAR}, #{selectedFlag,jdbcType=DECIMAL}, #{mdNewName,jdbcType=VARCHAR}, 
+      #{showSequence,jdbcType=DECIMAL}, #{mdUrl,jdbcType=VARCHAR}, #{isSystemMd,jdbcType=DECIMAL}, 
+      #{haveChild,jdbcType=DECIMAL}, #{intranetFlag,jdbcType=DECIMAL}, #{oasysFlag,jdbcType=DECIMAL}, 
+      #{activeFlag,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{updateCount,jdbcType=DECIMAL}, 
+      #{attribute01,jdbcType=VARCHAR}, #{attribute02,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhb.platform.entity.MdModule">
+    insert into MD_MODULE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rowId != null">
+        ROW_ID,
+      </if>
+      <if test="mdName != null">
+        MD_NAME,
+      </if>
+      <if test="mdCode != null">
+        MD_CODE,
+      </if>
+      <if test="parentRowid != null">
+        PARENT_ROWID,
+      </if>
+      <if test="selectedFlag != null">
+        SELECTED_FLAG,
+      </if>
+      <if test="mdNewName != null">
+        MD_NEW_NAME,
+      </if>
+      <if test="showSequence != null">
+        SHOW_SEQUENCE,
+      </if>
+      <if test="mdUrl != null">
+        MD_URL,
+      </if>
+      <if test="isSystemMd != null">
+        IS_SYSTEM_MD,
+      </if>
+      <if test="haveChild != null">
+        HAVE_CHILD,
+      </if>
+      <if test="intranetFlag != null">
+        INTRANET_FLAG,
+      </if>
+      <if test="oasysFlag != null">
+        OASYS_FLAG,
+      </if>
+      <if test="activeFlag != null">
+        ACTIVE_FLAG,
+      </if>
+      <if test="createDate != null">
+        CREATE_DATE,
+      </if>
+      <if test="createBy != null">
+        CREATE_BY,
+      </if>
+      <if test="lastUpdateDate != null">
+        LAST_UPDATE_DATE,
+      </if>
+      <if test="lastUpdateBy != null">
+        LAST_UPDATE_BY,
+      </if>
+      <if test="updateCount != null">
+        UPDATE_COUNT,
+      </if>
+      <if test="attribute01 != null">
+        ATTRIBUTE01,
+      </if>
+      <if test="attribute02 != null">
+        ATTRIBUTE02,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rowId != null">
+        #{rowId,jdbcType=DECIMAL},
+      </if>
+      <if test="mdName != null">
+        #{mdName,jdbcType=VARCHAR},
+      </if>
+      <if test="mdCode != null">
+        #{mdCode,jdbcType=VARCHAR},
+      </if>
+      <if test="parentRowid != null">
+        #{parentRowid,jdbcType=VARCHAR},
+      </if>
+      <if test="selectedFlag != null">
+        #{selectedFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="mdNewName != null">
+        #{mdNewName,jdbcType=VARCHAR},
+      </if>
+      <if test="showSequence != null">
+        #{showSequence,jdbcType=DECIMAL},
+      </if>
+      <if test="mdUrl != null">
+        #{mdUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="isSystemMd != null">
+        #{isSystemMd,jdbcType=DECIMAL},
+      </if>
+      <if test="haveChild != null">
+        #{haveChild,jdbcType=DECIMAL},
+      </if>
+      <if test="intranetFlag != null">
+        #{intranetFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="oasysFlag != null">
+        #{oasysFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="activeFlag != null">
+        #{activeFlag,jdbcType=DECIMAL},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createBy != null">
+        #{createBy,jdbcType=VARCHAR},
+      </if>
+      <if test="lastUpdateDate != null">
+        #{lastUpdateDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastUpdateBy != null">
+        #{lastUpdateBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updateCount != null">
+        #{updateCount,jdbcType=DECIMAL},
+      </if>
+      <if test="attribute01 != null">
+        #{attribute01,jdbcType=VARCHAR},
+      </if>
+      <if test="attribute02 != null">
+        #{attribute02,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+</mapper>
