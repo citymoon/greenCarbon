@@ -61,6 +61,12 @@ $(function(){
 			},
 		}
 	});*/
+	$("body").Huitab({
+		tabBar:".navbar-wrapper .navbar-levelone",
+		tabCon:".Hui-aside .menu_dropdown",
+		className:"current",
+		index:0,
+	});
 });
 /*个人信息*/
 function myselfinfo(){

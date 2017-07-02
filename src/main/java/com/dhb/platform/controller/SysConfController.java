@@ -38,11 +38,9 @@ public class SysConfController {
     
     @RequestMapping("/index")
     public ModelAndView getSysConf(Model model){
-        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModule();
         MdSystem mdSystem = mdSystemService.getMdSystemByOne();
         OaConfigTab oaConfigTab = oaConfigService.getOaConfigTab();
         model.addAttribute("sysCompName", mdSystem.getSysCompName());
-        model.addAttribute("modules",modules);
         model.addAttribute("oaConfigTab",oaConfigTab);
         return new ModelAndView("sysconf/firstIndex", "model", model);
     }

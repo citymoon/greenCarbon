@@ -1,17 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ include file="/common.jsp" %>
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <%@ include file="/commonhead.jsp" %>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="${ctx}/resources/bootstrap/js/bootstrap.min.js"></script> 
-    <script src="${ctx}/resources/js/index.js"></script>
-  </head>
+<!DOCTYPE HTML>
+<html>
+<head>
+<%@ include file="/commonhead.jsp"%>
+</head>
 <body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
+	<span class="c-gray en">&gt;</span>
+	系统管理
+	<span class="c-gray en">&gt;</span>
+	基本设置
+	<a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
+		<i class="Hui-iconfont">&#xe68f;</i></a>
+</nav>
+
 ${oaConfigTab.sysWebPath }
 </body>
 </html>
