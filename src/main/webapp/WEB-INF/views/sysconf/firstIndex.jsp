@@ -16,138 +16,90 @@
 		<i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
 <div class="page-container">
-	<form class="form form-horizontal" id="form-article-add">
-		<div id="tab-system" class="HuiTab">
-			<div class="tabBar cl">
-				<span>基本设置</span>
-				<span>安全设置</span>
-				<span>邮件设置</span>
-				<span>其他设置</span>
+	<form class="form form-horizontal" id="sysform">
+		<input type="hidden" id="rowId" name="rowId" value="${oaConfigTab.rowId }">
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				系统名称：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="sysName" name="sysName" placeholder="控制在50个字、100个字节以内" value="${sysCompName }" class="input-text">
 			</div>
-			<div class="tabCon">
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						网站名称：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-title" placeholder="控制在25个字、50个字节以内" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						关键词：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-Keywords" placeholder="5个左右,8汉字以内,用英文,隔开" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						描述：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-description" placeholder="空制在80个汉字，160个字符以内" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						css、js、images路径配置：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-static" placeholder="默认为空，为相对路径" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						上传目录配置：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-uploadfile" placeholder="默认为uploadfile" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">
-						<span class="c-red">*</span>
-						底部版权信息：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-copyright" placeholder="&copy; 2016 H-ui.net" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">备案号：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="website-icp" placeholder="京ICP备00000000号" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">统计代码：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<textarea class="textarea"></textarea>
-					</div>
-				</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				系统WEB绝对路径：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="sysWebPath" name="sysWebPath" value="${oaConfigTab.sysWebPath }" placeholder="5个左右,8汉字以内,用英文,隔开" class="input-text">
 			</div>
-			<div class="tabCon">
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">允许访问后台的IP列表：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<textarea class="textarea" name="" id=""></textarea>
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">后台登录失败最大次数：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="5" id="" name="" >
-					</div>
-				</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				系统上传相对路径：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="sysUploadPath" name="sysUploadPath" value="${oaConfigTab.sysUploadPath }" placeholder="空制在80个汉字，160个字符以内" class="input-text">
 			</div>
-			<div class="tabCon">
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">邮件发送模式：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text"  class="input-text" value="" id="" name="">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">SMTP服务器：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">SMTP 端口：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="25" id="" name="" >
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">邮箱帐号：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" class="input-text" value="5" id="emailName" name="emailName" >
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">邮箱密码：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="password" id="email-password" value="" class="input-text">
-					</div>
-				</div>
-				<div class="row cl">
-					<label class="form-label col-xs-4 col-sm-2">收件邮箱地址：</label>
-					<div class="formControls col-xs-8 col-sm-9">
-						<input type="text" id="email-address" value="" class="input-text">
-					</div>
-				</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				管理员邮箱：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="webMasterMail" name="webMasterMail" value="${oaConfigTab.webMasterMail }" placeholder="默认为空，为相对路径" class="input-text">
 			</div>
-			<div class="tabCon">
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				邮件服务器：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="mailServerIp" name="mailServerIp" value="${oaConfigTab.mailServerIp }" placeholder="默认为uploadfile" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2">
+				<span class="c-red">*</span>
+				系统访问URL：</label>
+			<div class="formControls col-xs-8 col-sm-9">
+				<input type="text" id="sysUrl" name="sysUrl" value="${oaConfigTab.sysUrl }" placeholder="&copy; 2016 H-ui.net" class="input-text">
+			</div>
+		</div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-2"></label>
+			<div class="col-xs-8 col-sm-9">
+				<p>
+				说明： <br> OA系统WEB物理目录为本系统所在的实际路径。 <br>
+				文件上传的相对目录是指本系统中的上传文件所存放的目录，必须是从OA系统WEB物理路径开始的目录，且文件上传的相对目录必须以“/”开头。<br>
+				系统访问的URL为本系统的访问路径。
+				</p>
 			</div>
 		</div>
 		<div class="row cl">
 			<div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-2">
-				<button onClick="article_save_submit();" class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
-				<button onClick="layer_close();" class="btn btn-default radius" type="button">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+				<button class="btn btn-primary radius" type="submit" id="conSub"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+				<button class="btn btn-default radius" type="reset">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
 			</div>
 		</div>
 	</form>
+</div>
+<!--普通弹出层-->
+<div id="callBackDialog" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content radius">
+			<div class="modal-header">
+				<h3 class="modal-title">提交结果</h3>
+				<a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void();">×</a>
+			</div>
+			<div class="modal-body">
+				<p>提交成功！</p>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" data-dismiss="modal" aria-hidden="true">确定</button>
+			</div>
+		</div>
+	</div>
 </div>
 <!--_footer 作为公共模版分离出去-->
 <%@ include file="/_footer.html" %>
@@ -157,13 +109,53 @@
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript">
 $(function(){
-	$('.skin-minimal input').iCheck({
-		checkboxClass: 'icheckbox-blue',
-		radioClass: 'iradio-blue',
-		increaseArea: '20%'
-	});
-	$("#tab-system").Huitab({
-		index:0
+	$('#conSub').click(function(){
+        $.ajax({
+            type:'POST',
+            datatype:'text',
+            url:"<%=ctxpath%>/sysconf/update",
+            data : $("#sysform").serialize(),
+            //contentType:"application/x-www-form-urlencoded",
+            success : function() {
+            	$("#callBackDialog").modal("show");
+            }
+        })
+    });
+	//表单验证
+	$("#sysform").validate({
+		rules:{
+			sysName:{
+				required:true,
+				maxlength:100
+			},
+			sysWebPath:{
+				required:true,
+				minlength:4,
+				maxlength:200
+			},
+			sysUploadPath:{
+				required:true,
+				minlength:4,
+				maxlength:200
+			},
+			webMasterMail:{
+				required:true,	
+				email:true
+			},
+			mailServerIp:{
+				required:true
+			},
+			sysUrl:{
+				required:true
+			}
+		},
+		onkeyup:false,
+		focusCleanup:true,
+		success:"valid",
+		submitHandler:function(form){
+			$("#modal-shenqing-success").modal("show");
+			$(form).ajaxSubmit();
+		}
 	});
 });
 </script>
