@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhb.platform.dao.MdSystemMapper">
+  <resultMap id="BaseResultMap" type="com.dhb.platform.entity.MdSystem">
+    <result column="ROW_ID" jdbcType="DECIMAL" property="rowId" />
+    <result column="SYS_COMP_NAME" jdbcType="VARCHAR" property="sysCompName" />
+    <result column="TEMPLATE_NO" jdbcType="DECIMAL" property="templateNo" />
+    <result column="BANNER_URL" jdbcType="VARCHAR" property="bannerUrl" />
+    <result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl" />
+    <result column="CONFIGED_FLAG" jdbcType="DECIMAL" property="configedFlag" />
+    <result column="CREATE_DATE" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="CREATE_BY" jdbcType="VARCHAR" property="createBy" />
+    <result column="LAST_UPDATE_DATE" jdbcType="TIMESTAMP" property="lastUpdateDate" />
+    <result column="LAST_UPDATE_BY" jdbcType="VARCHAR" property="lastUpdateBy" />
+    <result column="UPDATE_COUNT" jdbcType="DECIMAL" property="updateCount" />
+    <result column="ATTRIBUTE01" jdbcType="VARCHAR" property="attribute01" />
+    <result column="ATTRIBUTE02" jdbcType="VARCHAR" property="attribute02" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ROW_ID, SYS_COMP_NAME, TEMPLATE_NO, BANNER_URL, LOGO_URL, CONFIGED_FLAG, CREATE_DATE, CREATE_BY, 
+    LAST_UPDATE_DATE, LAST_UPDATE_BY, UPDATE_COUNT, ATTRIBUTE01, ATTRIBUTE02
+  </sql>
+  <select id="selectOneRow" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MD_SYSTEM
+    ORDER BY ROW_ID DESC LIMIT 1
+  </select>
+  <update id="updateById" parameterType="java.util.Map">
+    update MD_SYSTEM
+    set SYS_COMP_NAME = '${sysCompName}' 
+    where ROW_ID = ${rowId}
+   </update>
+</mapper>
