@@ -42,9 +42,11 @@
 			<li id="closeall">关闭全部</li>
 		</ul>
 	</div>
-	<%@ include file="/_footer.html" %>
 	
-<!--请在下方写此页面业务相关的脚本-->
+<!--_footer 页面公共js脚本引入-->
+<%@ include file="/_footer.html" %>
+
+<!--开始页面业务相关的脚本-->
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.contextmenu/jquery.contextmenu.r2.js"></script>
 <script type="text/javascript">
 $(function(){
@@ -113,5 +115,6 @@ function member_add(title,url,w,h){
 	layer_show(title,url,w,h);
 }
 </script> 
+<!--/结束页面业务相关的脚本-->
 </body>
 </html>

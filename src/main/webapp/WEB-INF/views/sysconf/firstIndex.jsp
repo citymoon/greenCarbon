@@ -68,7 +68,7 @@
 		</div>
 		<div class="row cl">
 			<label class="form-label col-xs-4 col-sm-2"></label>
-			<div class="col-xs-8 col-sm-9">
+			<div class="col-xs-8 col-sm-9 text-l c-black">
 				<p>
 				说明： <br> OA系统WEB物理目录为本系统所在的实际路径。 <br>
 				文件上传的相对目录是指本系统中的上传文件所存放的目录，必须是从OA系统WEB物理路径开始的目录，且文件上传的相对目录必须以“/”开头。<br>
@@ -101,9 +101,11 @@
 		</div>
 	</div>
 </div>
-<!--_footer 作为公共模版分离出去-->
+
+<!--_footer 页面公共js脚本引入-->
 <%@ include file="/_footer.html" %>
-<!--请在下方写此页面业务相关的脚本-->
+
+<!--开始页面业务相关的脚本-->
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/messages_zh.js"></script>
@@ -121,7 +123,7 @@ $(function(){
             }
         })
     });
-	//表单验证
+	/*表单验证*/
 	$("#sysform").validate({
 		rules:{
 			sysName:{
@@ -159,6 +161,6 @@ $(function(){
 	});
 });
 </script>
-<!--/请在上方写此页面业务相关的脚本-->
+<!--/结束页面业务相关的脚本-->
 </body>
 </html>

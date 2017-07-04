@@ -59,7 +59,7 @@ public class UserInfoController {
         user.setUserName(request.getParameter("name"));
         user.setPassword(request.getParameter("passwd"));
         user.setAccount(request.getParameter("account"));
-    	boolean flag = userInfoService.updateByPrimaryKey(user);
+//    	boolean flag = userInfoService.updateByPrimaryKey(user);
 //    	if(!flag){
 //    		return new ModelAndView(upUrl,"user",user);
 //    	}

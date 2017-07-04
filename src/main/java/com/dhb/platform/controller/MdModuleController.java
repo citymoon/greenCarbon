@@ -22,16 +22,23 @@ public class MdModuleController {
     
     @RequestMapping("/moduleIndex")
     public ModelAndView getModuleIndex(Model model){
-        return getAllModule(model);
+        return getAllModuleForMenu(model);
     }
     
-    @RequestMapping("/getAllModule")
-    public ModelAndView getAllModule(Model model){
-        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModule();
+    @RequestMapping("/getAllModuleForMenu")
+    public ModelAndView getAllModuleForMenu(Model model){
+        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForMenu();
         model.addAttribute("modules",modules);
         return new ModelAndView("moduleIndex","model",model);
     }
     
+    @RequestMapping("/getAllModuleForSelected")
+    public ModelAndView getAllModuleForSelected(Model model){
+        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForSelected();
+        model.addAttribute("modules",modules);
+        return new ModelAndView("sysconf/moduleConfig","model",model);
+    }
+
     @RequestMapping("/reConfig")
     public ModelAndView reConfigModule(){
         
