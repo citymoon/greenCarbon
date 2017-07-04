@@ -9,9 +9,9 @@
 <body>
 <nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
     <span class="c-gray en">&gt;</span>
-    系统管理
+            系统管理
     <span class="c-gray en">&gt;</span>
-    模块配置
+            模块配置
     <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
         <i class="Hui-iconfont">&#xe68f;</i></a>
 </nav>
@@ -54,8 +54,7 @@
 	</table>
 	<div class="row cl mt-10">
 	    <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
-	        <button class="btn btn-primary radius" type="submit" id="conSub"><i class="Hui-iconfont">&#xe632;</i>保存</button>
-	        <button class="btn btn-default radius" type="reset">&nbsp;&nbsp;取消&nbsp;&nbsp;</button>
+	        <button class="btn btn-primary radius" type="submit" id="conSub"><i class="Hui-iconfont">&#xe632;</i>重新配置</button>
 	    </div>
 	</div>
 </div>
@@ -70,12 +69,7 @@ $(function(){
         $.ajax({
             type:'POST',
             datatype:'text',
-            url:"<%=ctxpath%>/sysconf/update",
-            data : $("#conForm").serialize(),
-            //contentType:"application/x-www-form-urlencoded",
-            success : function() {
-                alert('ok');
-            }
+            url:"<%=ctxpath%>/getAllModuleForKey/reconf"
         })
     });
     

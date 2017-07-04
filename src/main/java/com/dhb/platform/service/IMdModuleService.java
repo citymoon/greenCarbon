@@ -24,5 +24,7 @@ public interface IMdModuleService {
      * 创建人     ： Administrator
      */
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected();
+    
+    public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForKey(String key); 
 
 }

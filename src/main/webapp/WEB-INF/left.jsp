@@ -25,7 +25,7 @@
 			<dt><i class="Hui-iconfont">&#xe616;</i> 二级导航1<i class="Hui-iconfont menu_dropdown-arrow">&#xe6d5;</i></dt>
 			<dd>
 				<ul>
-					<li><a data-href="${ctx}/module/getAllModuleForSelected" data-title="模块配置" href="javascript:void(0)">模块配置</a></li>
+					<li><a data-href="${ctx}/getAllModuleForKey/conf" data-title="模块配置" href="javascript:void(0)">模块配置</a></li>
 				</ul>
 			</dd>
 		</dl>
