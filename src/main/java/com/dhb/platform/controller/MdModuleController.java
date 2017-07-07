@@ -22,30 +22,27 @@ public class MdModuleController {
     @Resource
     IMdModuleService mdModuleService;
     
-//    @RequestMapping("/moduleIndex")
-//    public ModelAndView getModuleIndex(Model model){
-//        return getAllModuleForMenu(model);
-//    }
-//    
-//    @RequestMapping("/getAllModuleForMenu")
-//    public ModelAndView getAllModuleForMenu(Model model){
-//        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForMenu();
-//        model.addAttribute("modules",modules);
-//        return new ModelAndView("moduleIndex","model",model);
-//    }
-//    
-//    @RequestMapping("/getAllModuleForSelected")
-//    public ModelAndView getAllModuleForSelected(Model model){
-//        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForSelected();
-//        model.addAttribute("modules",modules);
-//        return new ModelAndView("sysconf/moduleConfig","model",model);
-//    }
-    
-    @RequestMapping(value="/getAllModuleForKey/{key}",method=RequestMethod.GET)
+
+    /**
+     * 
+     * 说明 : 根据不同的参数，查询系统模块信息并定位到相应视图
+     * @param key    menu-系统主菜单  conf-系统当前配置    其它-系统所有模块
+     * @param model  
+     * @return
+     * 创建日期： 2017年7月5日
+     * 创建人    ： Administrator
+     */
+    @RequestMapping(value="/getAllModuleForKey/{key}")
     public ModelAndView getAllModuleForKey(@PathVariable("key") String key,Model model){
-        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForSelected();
+        LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey(key);
         model.addAttribute("modules",modules);
-        return new ModelAndView("sysconf/moduleConfig","model",model);
+        if(key.equalsIgnoreCase("menu")){
+            return new ModelAndView("moduleIndex","model",model);
+        }else if(key.equalsIgnoreCase("conf")){
+            return new ModelAndView("sysconf/moduleConfig","model",model);
+        }else{
+            return new ModelAndView("sysconf/moduleReconfig","model",model);
+        }
     }
 
     @RequestMapping("/reConfig")

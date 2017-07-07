@@ -22,53 +22,10 @@ public class MdModuleServiceImpl implements IMdModuleService {
     
     /**
      * 
-     * 说明        : 主菜单查询方法，去除了未配置且没有子菜单的一级模块
-     * @return
-     * 创建日期 ： 2017年7月4日
-     * 创建人     ： Administrator
+     * 说明：根据不同的参数，查询系统模块信息。
+     * @param key menu-系统主菜单  conf-系统当前配置    其它-系统所有模块
+     * @see com.dhb.platform.service.IMdModuleService#getAllModuleForKey(java.lang.String)
      */
-    public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForMenu() {
-        //被配置的一级模块（上级结点为0）
-    	Map<String, Object> params = new HashMap<String, Object>();
-		params.put("parentRowid", "0");
-		params.put("selectedFlag", "1");
-		params.put("haveChild", "1");
-        List<MdModule> firstModules = dao.selectModuleByParams(params);
-        LinkedHashMap<MdModule, List<MdModule>> resultModuleMap = new LinkedHashMap<MdModule, List<MdModule>>();
-        for (MdModule mdModule : firstModules) {
-        	//所属被配置的二级模块
-        	params.put("parentRowid", mdModule.getRowId().toString());
-        	params.put("haveChild", "0");
-            List<MdModule> moduleList = dao.selectModuleByParams(params);
-            resultModuleMap.put(mdModule, moduleList);
-        }
-        return resultModuleMap;
-    }
-
-    /**
-     * 
-     * 说明        : 已配置所有模块查询
-     * @return
-     * 创建日期 ： 2017年7月4日
-     * 创建人     ： Administrator
-     */
-    public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected() {
-        //被配置的一级模块（上级结点为0）
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("parentRowid", "0");
-        params.put("selectedFlag", "1");
-        List<MdModule> firstModules = dao.selectModuleByParams(params);
-        LinkedHashMap<MdModule, List<MdModule>> resultModuleMap = new LinkedHashMap<MdModule, List<MdModule>>();
-        for (MdModule mdModule : firstModules) {
-            //所属被配置的二级模块
-            params.put("parentRowid", mdModule.getRowId().toString());
-            List<MdModule> moduleList = dao.selectModuleByParams(params);
-            resultModuleMap.put(mdModule, moduleList);
-        }
-        return resultModuleMap;
-    }
-
-    
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForKey(String key) {
         //一级模块（上级结点为0）
         Map<String, Object> params = new HashMap<String, Object>();
@@ -80,6 +37,8 @@ public class MdModuleServiceImpl implements IMdModuleService {
         }else if(key.equalsIgnoreCase("conf")){
             //一级模块，被配置
             params.put("selectedFlag", "1");
+        }else{
+            params.remove("selectedFlag");
         }
         List<MdModule> firstModules = dao.selectModuleByParams(params);
         LinkedHashMap<MdModule, List<MdModule>> resultModuleMap = new LinkedHashMap<MdModule, List<MdModule>>();
@@ -94,6 +53,16 @@ public class MdModuleServiceImpl implements IMdModuleService {
             resultModuleMap.put(mdModule, moduleList);
         }
         return resultModuleMap;
+    }
+
+    @Override
+    public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForMenu() {
+        return null;
+    }
+
+    @Override
+    public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected() {
+        return null;
     }
 
 }

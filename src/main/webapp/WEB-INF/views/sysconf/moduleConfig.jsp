@@ -54,7 +54,7 @@
 	</table>
 	<div class="row cl mt-10">
 	    <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
-	        <button class="btn btn-primary radius" type="submit" id="conSub"><i class="Hui-iconfont">&#xe632;</i>重新配置</button>
+	        <button class="btn btn-primary radius" type="submit" id="reconSub"><i class="Hui-iconfont">&#xe632;</i>重新配置</button>
 	    </div>
 	</div>
 </div>
@@ -65,11 +65,11 @@
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">
 $(function(){
-    $('#conSub').click(function(){
+    $('#reconSub').click(function(){
         $.ajax({
             type:'POST',
             datatype:'text',
-            url:"<%=ctxpath%>/getAllModuleForKey/reconf"
+            url:"<%=ctxpath%>/module/getAllModuleForKey/reconf"
         })
     });
     
