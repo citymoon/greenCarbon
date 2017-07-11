@@ -18,7 +18,7 @@
   </div>
   
 <!--_footer 页面公共js脚本引入-->
-<%@ include file="/_footer.html" %>
+<%@ include file="/footer.jsp" %>
 
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">

@@ -45,10 +45,4 @@ public class MdModuleController {
         }
     }
 
-    @RequestMapping("/reConfig")
-    public ModelAndView reConfigModule(){
-        
-        return new ModelAndView("sysconf/moduleConfig","message","success....");
-    }
-
 }

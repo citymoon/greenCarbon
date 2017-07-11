@@ -6,16 +6,8 @@
 <head>
 <%@ include file="/commonhead.jsp"%>
 </head>
-<body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-    <span class="c-gray en">&gt;</span>
-            系统管理
-    <span class="c-gray en">&gt;</span>
-            模块配置
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
-        <i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
-<div class="page-container">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row cl mt-10">
 	    <label class="form-label col-xs-1 col-sm-1"></label>
 	    <div class="col-xs-8 col-sm-9 text-l c-black">
@@ -53,7 +45,16 @@
 				  </c:choose>
 		        </td>
 		        <td>
-		        1
+		        <input type="checkbox" name="selectedFlag" value="${map.key.selectedFlag }" 
+                  <c:choose>
+                    <c:when test="${map.key.selectedFlag == '1'}">
+                      <c:out value="checked='checked'"></c:out>
+                    </c:when>
+                    <c:otherwise>  
+                      <c:out value=""></c:out>
+                    </c:otherwise>
+                  </c:choose>
+                  >
                 </td>
 		    </tr>
 		    <c:forEach var="module" items="${map.value}" varStatus="status2">
@@ -73,35 +74,30 @@
                   </c:choose>
                 </td>
                 <td>
-                1
+                  <input type="checkbox" name="selectedFlag" value="${module.selectedFlag }" 
+                  <c:choose>
+                    <c:when test="${module.selectedFlag == '1'}">
+                      <c:out value="checked='checked'"></c:out>
+                    </c:when>
+                    <c:otherwise>  
+                      <c:out value=""></c:out>
+                    </c:otherwise>
+                  </c:choose>
+                  >
                 </td>
 		    </tr>
 		    </c:forEach>
 		</c:forEach>
 	    </tbody>
 	</table>
-	<!-- div class="row cl mt-10">
-	    <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
-	        <button class="btn btn-primary radius" type="submit" id="conSub"><i class="Hui-iconfont">&#xe632;</i>重新配置</button>
-	    </div>
-	</div>
-</div -->
-
+</div>
+ 
 <!--_footer 页面公共js脚本引入-->
-<%@ include file="/_footer.html" %>
+<%@ include file="/footer.jsp" %>
 
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">
-$(function(){
-    $('#conSub').click(function(){
-        $.ajax({
-            type:'POST',
-            datatype:'text',
-            url:"<%=ctxpath%>/getAllModuleForKey/reconf"
-        })
-    });
-    
-});
+
 </script>
 </body>
 </html>

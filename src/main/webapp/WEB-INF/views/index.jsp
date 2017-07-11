@@ -71,6 +71,6 @@
   </div>
 </div>
 <div class="footer">Copyright GreenCarbon</div>
-<%@ include file="/_footer.html" %>
+<%@ include file="/footer.jsp" %>
 </body>
 </html>

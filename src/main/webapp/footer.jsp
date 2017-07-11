@@ -1,3 +1,4 @@
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
 <!-- 全局js -->
 <script src="${ctx}/resources/js/jquery.min.js?v=2.1.4"></script>
 <script src="${ctx}/resources/js/bootstrap.min.js?v=3.3.6"></script>

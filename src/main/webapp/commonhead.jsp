@@ -15,3 +15,4 @@
 <link href="${ctx}/resources/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
 <link href="${ctx}/resources/css/animate.css" rel="stylesheet">
 <link href="${ctx}/resources/css/style.css?v=4.1.0" rel="stylesheet">
+<link href="${ctx}/resources/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">

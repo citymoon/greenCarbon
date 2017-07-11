@@ -6,16 +6,8 @@
 <head>
 <%@ include file="/commonhead.jsp"%>
 </head>
-<body>
-<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页
-    <span class="c-gray en">&gt;</span>
-            系统管理
-    <span class="c-gray en">&gt;</span>
-            模块配置
-    <a class="btn btn-success radius r" style="line-height:1.6em;margin-top:3px" href="javascript:location.replace(location.href);" title="刷新" >
-        <i class="Hui-iconfont">&#xe68f;</i></a>
-</nav>
-<div class="page-container">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row cl mt-10">
 	    <label class="form-label col-xs-1 col-sm-1"></label>
 	    <div class="col-xs-8 col-sm-9 text-l c-black">
@@ -54,26 +46,16 @@
 	</table>
 	<div class="row cl mt-10">
 	    <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
-	        <button class="btn btn-primary radius" type="submit" id="reconSub"><i class="Hui-iconfont">&#xe632;</i>重新配置</button>
+	        <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="Hui-iconfont">&#xe632;</i>重新配置</button></a>
 	    </div>
 	</div>
 </div>
-
 <!--_footer 页面公共js脚本引入-->
-<%@ include file="/_footer.html" %>
+<%@ include file="/footer.jsp" %>
 
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">
-$(function(){
-    $('#reconSub').click(function(){
-        $.ajax({
-            type:'POST',
-            datatype:'text',
-            url:"<%=ctxpath%>/module/getAllModuleForKey/reconf"
-        })
-    });
-    
-});
+
 </script>
 </body>
 </html>
