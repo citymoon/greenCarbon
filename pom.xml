@@ -53,6 +53,11 @@
 			<version>3.2.2</version>
 		</dependency>
 		<dependency>
+			<groupId>commons-fileupload</groupId>
+			<artifactId>commons-fileupload</artifactId>
+			<version>1.3</version>
+		</dependency>
+		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
 			<version>1.2</version>
@@ -79,11 +84,8 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		<!-- dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-core</artifactId>
-			<version>2.8.8</version>
-		</dependency-->
+		<!-- dependency> <groupId>com.fasterxml.jackson.core</groupId> <artifactId>jackson-core</artifactId> 
+			<version>2.8.8</version> </dependency -->
 		<dependency>
 			<groupId>org.codehaus.jackson</groupId>
 			<artifactId>jackson-core-asl</artifactId>
@@ -104,22 +106,27 @@
 			<artifactId>jackson-core</artifactId>
 			<version>2.8.7</version>
 		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>fastjson</artifactId>
+			<version>1.2.31</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>greenCarbon</finalName>
 	</build>
 	<profiles>
-	    <profile>
-	    	<id>jdk-1.7</id>
-	        <activation>
-	            <activeByDefault>true</activeByDefault>
-	            <jdk>1.7</jdk>
-	        </activation>
-	        <properties>
-	            <maven.compiler.source>1.7</maven.compiler.source>
-	            <maven.compiler.target>1.7</maven.compiler.target>
+		<profile>
+			<id>jdk-1.7</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.7</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.7</maven.compiler.source>
+				<maven.compiler.target>1.7</maven.compiler.target>
 				<maven.compiler.compilerVersion>1.7</maven.compiler.compilerVersion>
-	        </properties>
-	    </profile>
+			</properties>
+		</profile>
 	</profiles>
 </project>
