@@ -85,13 +85,15 @@
 <!--_footer 页面公共js脚本引入-->
 <%@ include file="/footer.jsp" %>
 
-<!--开始页面业务相关的脚本-->
+<!--引入页面插件相关的脚本-->
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/jquery.validate.js"></script>
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/validate-methods.js"></script>
 <script type="text/javascript" src="${ctx}/resources/lib/jquery.validation/1.14.0/messages_zh.js"></script>
 <script type="text/javascript" src="${ctx}/resources/js/demo/layer-demo.js"></script>
+
+<!--开始页面业务相关的脚本-->
 <script type="text/javascript">
-$(function(){
+$(document).ready(function () {
 	$('#conSub').click(function(){
         $.ajax({
             type:'POST',

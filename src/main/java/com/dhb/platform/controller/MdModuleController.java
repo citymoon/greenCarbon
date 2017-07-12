@@ -39,7 +39,8 @@ public class MdModuleController {
         if(key.equalsIgnoreCase("menu")){
             return new ModelAndView("moduleIndex","model",model);
         }else if(key.equalsIgnoreCase("conf")){
-            return new ModelAndView("sysconf/moduleConfig","model",model);
+            return new ModelAndView("sysconf/moduleTree","model",model);
+//            return new ModelAndView("sysconf/moduleConfig","model",model);
         }else{
             return new ModelAndView("sysconf/moduleReconfig","model",model);
         }
