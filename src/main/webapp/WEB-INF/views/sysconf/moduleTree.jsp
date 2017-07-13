@@ -95,7 +95,7 @@
 	           <div class="ibox-content">
                    <form class="form-horizontal m-t" id="commentForm">
                      <div class="form-group">
-                       <label class="col-sm-2 control-label">内外模块标志</label>
+                       <label class="col-sm-2 control-label">内外模块标志：</label>
                        <div class="col-sm-8">
 	                       <div class="radio i-checks">
 	                           <label>
@@ -106,7 +106,7 @@
                        </div>
                      </div>
                      <div class="form-group">
-                       <label class="col-sm-2 control-label">模块层次标志</label>
+                       <label class="col-sm-2 control-label">模块层次标志：</label>
                        <div class="col-sm-8">
 	                       <div class="radio i-checks">
 	                           <label>
@@ -119,7 +119,7 @@
                        </div>
                      </div>
                      <div class="form-group">
-                       <label class="col-sm-2 control-label">所属父级模块</label>
+                       <label class="col-sm-2 control-label">所属父级模块：</label>
                        <div class="col-sm-8">
                                     <select class="form-control m-b" name="account">
                                         <option>选项 1</option>

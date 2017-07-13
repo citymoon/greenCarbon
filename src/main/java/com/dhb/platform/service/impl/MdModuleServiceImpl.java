@@ -1,5 +1,6 @@
 package com.dhb.platform.service.impl;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -7,12 +8,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.eclipse.jdt.internal.compiler.ast.AND_AND_Expression;
 import org.springframework.stereotype.Service;
 
 import com.dhb.platform.dao.MdModuleMapper;
 import com.dhb.platform.entity.JbdpUser;
 import com.dhb.platform.entity.MdModule;
 import com.dhb.platform.service.IMdModuleService;
+import com.fasterxml.jackson.databind.Module;
 
 @Service
 public class MdModuleServiceImpl implements IMdModuleService {
@@ -63,6 +66,38 @@ public class MdModuleServiceImpl implements IMdModuleService {
     @Override
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected() {
         return null;
+    }
+
+    @Override
+    public boolean moveUp(String rowId) {
+        MdModule module = dao.selectModuleByPrimaryKey(rowId);
+        List<MdModule> moduleList = dao.selectModuleLessShowSequence(rowId);
+        boolean status = moveModule(module,moduleList);
+        return status;
+    }
+    
+    public boolean moveDown(String rowId) {
+        MdModule module = dao.selectModuleByPrimaryKey(rowId);
+        List<MdModule> moduleList = dao.selectModuleGrtShowSequence(rowId);
+        boolean status = moveModule(module,moduleList);
+        return status;
+    }
+    
+    public boolean moveModule(MdModule module,List<MdModule> moduleList) {
+        boolean status = false;
+        try{
+            MdModule moduleold = moduleList.get(0);
+            BigDecimal temp = module.getShowSequence();
+            module.setShowSequence(moduleold.getShowSequence());
+            moduleold.setShowSequence(temp);
+            dao.updateByPrimaryKey(module);
+            dao.updateByPrimaryKey(moduleold);
+            status = true;
+            return status;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return status;
     }
 
 }

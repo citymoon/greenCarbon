@@ -30,7 +30,7 @@
 	    <tbody class="text-c">
 	    <c:forEach var="map" items="${model.modules}" varStatus="status">
 		    <tr>
-		        <td><input type="radio" value="${map.key.rowId }" name="rowId"><label>${status.index + 1}</label></td>
+		        <td><input type="radio" value="${map.key.rowId }" name="rowId" id="rowId"><label>${status.index + 1}</label></td>
 		        <td>${map.key.mdNewName }</td>
 		        <td>${map.key.mdName }</td>
 		        <td>${map.key.mdCode }</td>
@@ -59,7 +59,7 @@
 		    </tr>
 		    <c:forEach var="module" items="${map.value}" varStatus="status2">
 		    <tr>
-		        <td>&nbsp;&nbsp;<input type="radio" value="${module.rowId }" name="rowId"><label>${status.index + 1}.${status2.index + 1}</label></td>
+		        <td>&nbsp;&nbsp;<input type="radio" value="${module.rowId }" name="rowId" id="rowId"><label>${status.index + 1}.${status2.index + 1}</label></td>
 		        <td>${module.mdNewName }</td>
 		        <td>${module.mdName }</td>
 		        <td>${module.mdCode }</td>
@@ -90,6 +90,17 @@
 		</c:forEach>
 	    </tbody>
 	</table>
+    <div class="row cl mt-10">
+        <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
+            <a href="#"><button class="btn btn-primary radius" id="up"><i class="fa fa-arrow-circle-up"></i>上移</button></a>
+            <a href="#"><button class="btn btn-primary radius" id="down"><i class="fa fa-arrow-circle-down"></i>下移</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-plus-circle"></i>增加</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-pencil-square"></i>修改</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-minus-circle"></i>删除</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-wrench"></i>完成</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-reply"></i>返回</button></a>
+        </div>
+    </div>
 </div>
  
 <!--_footer 页面公共js脚本引入-->
@@ -97,7 +108,34 @@
 
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">
-
+$(document).ready(function () {
+	
+	$("#up").click(function(){
+		var selected = $('input:radio[name="rowId"]:checked').val();
+		if(selected == null) {
+            alert("没有选中项");
+            return false;
+        } else {
+        	$.ajax({
+                type:'POST',
+                datatype:'html',
+                url:"<%=ctxpath%>/module/moveup",
+                //data : $("#sysform").serialize(),
+                data : "rowId="+selected,
+                //contentType:"application/x-www-form-urlencoded",
+                success : function() {
+                    alert('保存成功！',{icon: 6});
+                },
+                error : function(){
+                	alert('操作失败！',error);
+                }
+            });
+        }
+	});
+	$("#down").click(function(){
+		
+	});
+});
 </script>
 </body>
 </html>

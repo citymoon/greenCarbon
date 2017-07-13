@@ -42,6 +42,32 @@
     </if>
     ORDER BY SHOW_SEQUENCE ASC
   </select>
+  <select id="selectModuleByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MD_MODULE
+    where ROW_ID = #{rowId,jdbcType=VARCHAR}
+  </select>
+  <select id="selectModuleLessShowSequence" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" /> 
+    from MD_MODULE
+    where 
+    <![CDATA[
+    SHOW_SEQUENCE < (SELECT SHOW_SEQUENCE FROM MD_MODULE WHERE ROW_ID = #{rowId,jdbcType=VARCHAR}) AND PARENT_ROWID IN (SELECT PARENT_ROWID FROM MD_MODULE WHERE ROW_ID = #{rowId,jdbcType=VARCHAR})
+    ]]>
+    ORDER BY SHOW_SEQUENCE DESC
+  </select>
+  <select id="selectModuleGrtShowSequence" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" /> 
+    from MD_MODULE
+    where 
+    <![CDATA[
+    SHOW_SEQUENCE > (SELECT SHOW_SEQUENCE FROM MD_MODULE WHERE ROW_ID = #{rowId,jdbcType=VARCHAR}) AND PARENT_ROWID IN (SELECT PARENT_ROWID FROM MD_MODULE WHERE ROW_ID = #{rowId,jdbcType=VARCHAR})
+    ]]>
+    ORDER BY SHOW_SEQUENCE DESC
+  </select>
   <insert id="insert" parameterType="com.dhb.platform.entity.MdModule">
     insert into MD_MODULE (ROW_ID, MD_NAME, MD_CODE, 
       PARENT_ROWID, SELECTED_FLAG, MD_NEW_NAME, 
@@ -185,4 +211,10 @@
       </if>
     </trim>
   </insert>
+  <update id="updateByPrimaryKey" parameterType="com.dhb.platform.entity.MdModule">
+  update MD_MODULE
+  set SHOW_SEQUENCE = #{showSequence,jdbcType=DECIMAL}
+  where ROW_ID = #{rowId,jdbcType=DECIMAL}
+</update>
+  
 </mapper>

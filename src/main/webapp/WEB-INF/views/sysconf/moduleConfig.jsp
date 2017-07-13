@@ -46,7 +46,7 @@
 	</table>
 	<div class="row cl mt-10">
 	    <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
-	        <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="Hui-iconfont">&#xe632;</i>重新配置</button></a>
+	        <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-wrench"></i>重新配置</button></a>
 	    </div>
 	</div>
 </div>

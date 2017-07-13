@@ -26,5 +26,9 @@ public interface IMdModuleService {
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected();
     
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForKey(String key); 
+    
+    public boolean moveUp(String rowId);
+    
+    public boolean moveDown(String rowId);
 
 }

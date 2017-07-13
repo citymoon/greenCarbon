@@ -1,10 +1,14 @@
 package com.dhb.platform.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhb.platform.entity.MdModule;
+import com.dhb.platform.entity.OaConfigTab;
 import com.dhb.platform.service.IMdModuleService;
 
 @Controller
@@ -39,11 +44,24 @@ public class MdModuleController {
         if(key.equalsIgnoreCase("menu")){
             return new ModelAndView("moduleIndex","model",model);
         }else if(key.equalsIgnoreCase("conf")){
-            return new ModelAndView("sysconf/moduleTree","model",model);
-//            return new ModelAndView("sysconf/moduleConfig","model",model);
+            //return new ModelAndView("sysconf/moduleTree","model",model);
+            return new ModelAndView("sysconf/moduleConfig","model",model);
         }else{
             return new ModelAndView("sysconf/moduleReconfig","model",model);
         }
+    }
+    
+    @RequestMapping("/moveup")
+    public ModelAndView moveUp(HttpServletRequest request,String rowId,Model model){
+        if(StringUtils.isBlank(rowId))
+            rowId = "";
+        boolean status = mdModuleService.moveUp(rowId);
+        if(status){
+            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
+            model.addAttribute("modules",modules);
+            return new ModelAndView("sysconf/moduleReconfig","model",model);
+        }
+        return new ModelAndView("sysconf/moduleReconfig","error", "fail");
     }
 
 }
