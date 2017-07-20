@@ -1,9 +1,7 @@
 package com.dhb.platform.controller;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -13,11 +11,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhb.platform.entity.MdModule;
-import com.dhb.platform.entity.OaConfigTab;
 import com.dhb.platform.service.IMdModuleService;
 
 @Controller
@@ -64,4 +61,18 @@ public class MdModuleController {
         return new ModelAndView("sysconf/moduleReconfig","error", "fail");
     }
 
+    @RequestMapping("/moveupjson")
+    public @ResponseBody Model moveUpJson(HttpServletRequest request,String rowId,Model model){
+        if(StringUtils.isBlank(rowId))
+            rowId = "";
+        boolean status = mdModuleService.moveUp(rowId);
+        if(status){
+            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
+            model.addAttribute("modules",modules);
+            return model;
+        }
+        model.addAttribute("error", "fail");
+        return model;
+    }
+    
 }

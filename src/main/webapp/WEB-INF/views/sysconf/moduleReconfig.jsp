@@ -118,13 +118,14 @@ $(document).ready(function () {
         } else {
         	$.ajax({
                 type:'POST',
-                datatype:'html',
-                url:"<%=ctxpath%>/module/moveup",
+                datatype:'json',
+                //url:"<%=ctxpath%>/module/moveup",
+                url:"<%=ctxpath%>/module/moveupjson",
                 //data : $("#sysform").serialize(),
                 data : "rowId="+selected,
                 //contentType:"application/x-www-form-urlencoded",
                 success : function() {
-                    alert('保存成功！',{icon: 6});
+                    //alert('保存成功！',{icon: 6});
                 },
                 error : function(){
                 	alert('操作失败！',error);
