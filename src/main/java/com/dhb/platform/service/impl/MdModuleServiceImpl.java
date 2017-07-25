@@ -8,14 +8,12 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.eclipse.jdt.internal.compiler.ast.AND_AND_Expression;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.dhb.platform.dao.MdModuleMapper;
-import com.dhb.platform.entity.JbdpUser;
 import com.dhb.platform.entity.MdModule;
 import com.dhb.platform.service.IMdModuleService;
-import com.fasterxml.jackson.databind.Module;
 
 @Service
 public class MdModuleServiceImpl implements IMdModuleService {
@@ -70,16 +68,22 @@ public class MdModuleServiceImpl implements IMdModuleService {
 
     @Override
     public boolean moveUp(String rowId) {
+        boolean status = false;
         MdModule module = dao.selectModuleByPrimaryKey(rowId);
         List<MdModule> moduleList = dao.selectModuleLessShowSequence(rowId);
-        boolean status = moveModule(module,moduleList);
+        if(moduleList != null && moduleList.size()>0){
+            status = moveModule(module,moduleList);
+        }
         return status;
     }
     
     public boolean moveDown(String rowId) {
+        boolean status = false;
         MdModule module = dao.selectModuleByPrimaryKey(rowId);
         List<MdModule> moduleList = dao.selectModuleGrtShowSequence(rowId);
-        boolean status = moveModule(module,moduleList);
+        if(moduleList != null && moduleList.size()>0){
+            status = moveModule(module,moduleList);
+        }
         return status;
     }
     
@@ -98,6 +102,22 @@ public class MdModuleServiceImpl implements IMdModuleService {
             ex.printStackTrace();
         }
         return status;
+    }
+    
+    public LinkedHashMap<String, Object> getAllModuleForKey() {
+        //一级模块（上级结点为0）
+        Map<String, Object> params = new HashMap<String, Object>();
+        LinkedHashMap<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        params.put("parentRowid", "0");
+
+        List<MdModule> firstModules = dao.selectModuleByParams(params);
+        
+        for (MdModule mdModule : firstModules) {
+            params.put("parentRowid", mdModule.getRowId());
+            String keyString = mdModule.getRowId()+","+mdModule.getMdNewName()+","+mdModule.getMdName()+","+mdModule.getMdCode()+","+mdModule.getIntranetFlag()+","+mdModule.getSelectedFlag();
+            resultMap.put(keyString, dao.selectModuleByParams(params));
+        }
+        return resultMap;
     }
 
 }

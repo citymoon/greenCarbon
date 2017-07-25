@@ -2,6 +2,7 @@ package com.dhb.platform.service;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.dhb.platform.entity.MdModule;
 
@@ -26,6 +27,8 @@ public interface IMdModuleService {
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected();
     
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForKey(String key); 
+    
+    public Map<String, Object> getAllModuleForKey();
     
     public boolean moveUp(String rowId);
     

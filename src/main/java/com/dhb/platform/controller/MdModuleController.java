@@ -1,7 +1,9 @@
 package com.dhb.platform.controller;
 
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -62,17 +64,23 @@ public class MdModuleController {
     }
 
     @RequestMapping("/moveupjson")
-    public @ResponseBody Model moveUpJson(HttpServletRequest request,String rowId,Model model){
+    @ResponseBody
+    public  Map<String, Object> moveUpJson(String rowId){
         if(StringUtils.isBlank(rowId))
             rowId = "";
         boolean status = mdModuleService.moveUp(rowId);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
         if(status){
-            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
-            model.addAttribute("modules",modules);
-            return model;
+//            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
+//            List<Module> modulelist = mdModuleService.getAllModuleForKey();   
+//            resultMap.put("modules", modulelist);
+            //model.addAttribute("modules",modules);
+            resultMap.put("rowid", rowId);
+            resultMap.put("result",mdModuleService.getAllModuleForKey());
+            return resultMap;
         }
-        model.addAttribute("error", "fail");
-        return model;
+        resultMap.put("error", "fail");
+        return resultMap;
     }
     
 }

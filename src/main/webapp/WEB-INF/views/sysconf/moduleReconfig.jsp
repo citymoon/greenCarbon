@@ -16,7 +16,7 @@
 	        </p>
 	    </div>
 	</div>
-	<table class="table table-border table-bordered table-bg">
+	<table class="table table-border table-bordered table-bg" id="mainTable">
 	    <thead class="text-c">
 	        <tr>
 	            <th width="10%">选择</th>
@@ -124,8 +124,66 @@ $(document).ready(function () {
                 //data : $("#sysform").serialize(),
                 data : "rowId="+selected,
                 //contentType:"application/x-www-form-urlencoded",
-                success : function() {
+                success : function(data) {
                     //alert('保存成功！',{icon: 6});
+                    $('#mainTable').find('tbody').remove();
+                    if(data != null){
+                    	var i=0;
+                    	var trs="";
+                    	var rowid="",result="";
+                    	$.each(data,function(name,value) {
+                    		if(name == "rowid" && value != null)
+                    			rowid = value;
+                    		if(name == "result" && value != null)
+                    			result = value;
+                    	});
+                        $.each(result,function(name,value) {
+                        	i++;
+                        	var keyString = name.split(',');
+                        	var moveselectflag = '';
+                        	if(keyString[0] == rowid)
+                        		moveselectflag = 'checked="checked"';
+                        	var checkedflag = 'checked="checked"';
+                        	if(keyString[4] == 0)
+                        		checkedflag = 'checked=""';
+                        	var intranetflag = '内部模块';
+                        	if(keyString[4] == '0')
+                        		intranetflag = '外部模块';
+                        	trs += '<tr>';
+                            trs += '<td><input type="radio" value="'+keyString[0]+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'</label></td>';
+                            trs += '<td>'+keyString[1]+'</td>'
+                            trs += '<td>'+keyString[2]+'</td>'
+                            trs += '<td>'+keyString[3]+'</td>'
+                            trs += '<td>'+intranetflag+'</td>'
+                            trs += '<td><input type="checkbox" name="selectedFlag" value="'+keyString[5]+'" '+checkedflag+'></td>'
+                            trs += '</tr>'
+                            if(value.length>0){
+                            	var j=0;
+                            	$.each(value,function(key,valueson) {
+                            		j++;
+                            		moveselectflag = '';
+                            		if(valueson.rowId == rowid)
+                                        moveselectflag = 'checked="checked"';
+                                    //var checkedflag = 'checked="checked"';
+                                    if(valueson.selectedFlag == 0)
+                                        checkedflag = 'checked=""';
+                                    //var intranetflag = '内部模块';
+                                    if(valueson.intranetFlag == '0')
+                                        intranetflag = '外部模块';
+                                    trs += '<tr>';
+                                    trs += '<td><input type="radio" value="'+valueson.rowId+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'.'+j+'</label></td>';
+                                    trs += '<td>'+valueson.mdNewName+'</td>'
+                                    trs += '<td>'+valueson.mdName+'</td>'
+                                    trs += '<td>'+valueson.mdCode+'</td>'
+                                    trs += '<td>'+intranetflag+'</td>'
+                                    trs += '<td><input type="checkbox" name="selectedFlag" value="'+valueson.selectedFlag+'" '+checkedflag+'></td>'
+                                    trs += '</tr>'
+                            	});
+                            }
+                        });
+                        console.log(trs);
+                        $("#mainTable").append(trs);
+                    }
                 },
                 error : function(){
                 	alert('操作失败！',error);
