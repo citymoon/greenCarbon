@@ -145,7 +145,7 @@ $(document).ready(function () {
                         		moveselectflag = 'checked="checked"';
                         	var checkedflag = 'checked="checked"';
                         	if(keyString[4] == 0)
-                        		checkedflag = 'checked=""';
+                        		checkedflag = '';
                         	var intranetflag = '内部模块';
                         	if(keyString[4] == '0')
                         		intranetflag = '外部模块';
@@ -164,10 +164,8 @@ $(document).ready(function () {
                             		moveselectflag = '';
                             		if(valueson.rowId == rowid)
                                         moveselectflag = 'checked="checked"';
-                                    //var checkedflag = 'checked="checked"';
                                     if(valueson.selectedFlag == 0)
-                                        checkedflag = 'checked=""';
-                                    //var intranetflag = '内部模块';
+                                        checkedflag = '';
                                     if(valueson.intranetFlag == '0')
                                         intranetflag = '外部模块';
                                     trs += '<tr>';
@@ -181,7 +179,6 @@ $(document).ready(function () {
                             	});
                             }
                         });
-                        console.log(trs);
                         $("#mainTable").append(trs);
                     }
                 },
