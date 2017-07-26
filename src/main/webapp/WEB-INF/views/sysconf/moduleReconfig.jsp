@@ -74,7 +74,7 @@
                   </c:choose>
                 </td>
                 <td>
-                  <input type="checkbox" name="selectedFlag" value="${module.selectedFlag }" 
+                  <input type="checkbox" name="selectedFlag" value="1" 
                   <c:choose>
                     <c:when test="${module.selectedFlag == '1'}">
                       <c:out value="checked='checked'"></c:out>
@@ -97,7 +97,7 @@
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-plus-circle"></i>增加</button></a>
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-pencil-square"></i>修改</button></a>
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-minus-circle"></i>删除</button></a>
-            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-wrench"></i>完成</button></a>
+            <a href="#"><button class="btn btn-primary radius" id="ok"><i class="fa fa-wrench"></i>完成</button></a>
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-reply"></i>返回</button></a>
         </div>
     </div>
@@ -106,6 +106,9 @@
 <!--_footer 页面公共js脚本引入-->
 <%@ include file="/footer.jsp" %>
 
+<!--引入页面插件相关的脚本-->
+<script type="text/javascript" src="${ctx}/resources/js/demo/layer-demo.js"></script>
+
 <!--开始页面业务相关的脚本-->
 <script type="text/javascript">
 $(document).ready(function () {
@@ -113,7 +116,7 @@ $(document).ready(function () {
 	$("#up").click(function(){
 		var selected = $('input:radio[name="rowId"]:checked').val();
 		if(selected == null) {
-            alert("没有选中项");
+			parent.layer.alert('没有选中项！',{icon: 0});
             return false;
         } else {
         	$.ajax({
@@ -126,71 +129,105 @@ $(document).ready(function () {
                 //contentType:"application/x-www-form-urlencoded",
                 success : function(data) {
                     //alert('保存成功！',{icon: 6});
-                    $('#mainTable').find('tbody').remove();
                     if(data != null){
-                    	var i=0;
-                    	var trs="";
-                    	var rowid="",result="";
-                    	$.each(data,function(name,value) {
-                    		if(name == "rowid" && value != null)
-                    			rowid = value;
-                    		if(name == "result" && value != null)
-                    			result = value;
-                    	});
-                        $.each(result,function(name,value) {
-                        	i++;
-                        	var keyString = name.split(',');
-                        	var moveselectflag = '';
-                        	if(keyString[0] == rowid)
-                        		moveselectflag = 'checked="checked"';
-                        	var checkedflag = 'checked="checked"';
-                        	if(keyString[4] == 0)
-                        		checkedflag = '';
-                        	var intranetflag = '内部模块';
-                        	if(keyString[4] == '0')
-                        		intranetflag = '外部模块';
-                        	trs += '<tr>';
-                            trs += '<td><input type="radio" value="'+keyString[0]+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'</label></td>';
-                            trs += '<td>'+keyString[1]+'</td>'
-                            trs += '<td>'+keyString[2]+'</td>'
-                            trs += '<td>'+keyString[3]+'</td>'
-                            trs += '<td>'+intranetflag+'</td>'
-                            trs += '<td><input type="checkbox" name="selectedFlag" value="'+keyString[5]+'" '+checkedflag+'></td>'
-                            trs += '</tr>'
-                            if(value.length>0){
-                            	var j=0;
-                            	$.each(value,function(key,valueson) {
-                            		j++;
-                            		moveselectflag = '';
-                            		if(valueson.rowId == rowid)
-                                        moveselectflag = 'checked="checked"';
-                                    if(valueson.selectedFlag == 0)
-                                        checkedflag = '';
-                                    if(valueson.intranetFlag == '0')
-                                        intranetflag = '外部模块';
-                                    trs += '<tr>';
-                                    trs += '<td><input type="radio" value="'+valueson.rowId+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'.'+j+'</label></td>';
-                                    trs += '<td>'+valueson.mdNewName+'</td>'
-                                    trs += '<td>'+valueson.mdName+'</td>'
-                                    trs += '<td>'+valueson.mdCode+'</td>'
-                                    trs += '<td>'+intranetflag+'</td>'
-                                    trs += '<td><input type="checkbox" name="selectedFlag" value="'+valueson.selectedFlag+'" '+checkedflag+'></td>'
-                                    trs += '</tr>'
-                            	});
-                            }
-                        });
-                        $("#mainTable").append(trs);
+                    	moveNode(data);
                     }
                 },
                 error : function(){
-                	alert('操作失败！',error);
+                	parent.layer.alert('操作失败！',{icon: 2});
+                	//alert('操作失败！',error);
                 }
             });
         }
 	});
-	$("#down").click(function(){
-		
+    $("#down").click(function(){
+        var selected = $('input:radio[name="rowId"]:checked').val();
+        if(selected == null) {
+        	parent.layer.alert('没有选中项！',{icon: 0});
+            return false;
+        } else {
+            $.ajax({
+                type:'POST',
+                datatype:'json',
+                //url:"<%=ctxpath%>/module/moveup",
+                url:"<%=ctxpath%>/module/movedownjson",
+                //data : $("#sysform").serialize(),
+                data : "rowId="+selected,
+                //contentType:"application/x-www-form-urlencoded",
+                success : function(data) {
+                    //alert('保存成功！',{icon: 6});
+                    if(data != null){
+                        moveNode(data);
+                    }
+                },
+                error : function(){
+                	parent.layer.alert('操作失败！',{icon: 2});
+                }
+            });
+        }
+    });
+	$("#ok").click(function(){
+		var selected = '';
+		$('input:checkbox[name="selectedFlag"]:checked').each(function(){ 
+			selected += $(this).val();
+		}) 
+		console.log(selected);
 	});
+	function moveNode(data){
+		var i=0;
+        var trs="";
+        var rowid="",result="";
+        $.each(data,function(name,value) {
+            if(name == "rowid" && value != null)
+                rowid = value;
+            if(name == "result" && value != null)
+                result = value;
+        });
+        $.each(result,function(name,value) {
+            i++;
+            var keyString = name.split(',');
+            var moveselectflag = '';
+            if(keyString[0] == rowid)
+                moveselectflag = 'checked="checked"';
+            var checkedflag = 'checked="checked"';
+            if(keyString[4] == 0)
+                checkedflag = '';
+            var intranetflag = '内部模块';
+            if(keyString[4] == '0')
+                intranetflag = '外部模块';
+            trs += '<tr>';
+            trs += '<td><input type="radio" value="'+keyString[0]+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'</label></td>';
+            trs += '<td>'+keyString[1]+'</td>'
+            trs += '<td>'+keyString[2]+'</td>'
+            trs += '<td>'+keyString[3]+'</td>'
+            trs += '<td>'+intranetflag+'</td>'
+            trs += '<td><input type="checkbox" name="selectedFlag" value="'+keyString[5]+'" '+checkedflag+'></td>'
+            trs += '</tr>'
+            if(value.length>0){
+                var j=0;
+                $.each(value,function(key,valueson) {
+                    j++;
+                    moveselectflag = '';
+                    if(valueson.rowId == rowid)
+                        moveselectflag = 'checked="checked"';
+                    if(valueson.selectedFlag == 0)
+                        checkedflag = '';
+                    if(valueson.intranetFlag == '0')
+                        intranetflag = '外部模块';
+                    trs += '<tr>';
+                    trs += '<td><input type="radio" value="'+valueson.rowId+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'.'+j+'</label></td>';
+                    trs += '<td>'+valueson.mdNewName+'</td>'
+                    trs += '<td>'+valueson.mdName+'</td>'
+                    trs += '<td>'+valueson.mdCode+'</td>'
+                    trs += '<td>'+intranetflag+'</td>'
+                    trs += '<td><input type="checkbox" name="selectedFlag" value="'+valueson.selectedFlag+'" '+checkedflag+'></td>'
+                    trs += '</tr>'
+                });
+            }
+        });
+        $('#mainTable').find('tbody').remove();
+        $("#mainTable").append(trs);
+	}
 });
 </script>
 </body>

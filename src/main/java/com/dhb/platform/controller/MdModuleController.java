@@ -50,19 +50,14 @@ public class MdModuleController {
         }
     }
     
-    @RequestMapping("/moveup")
-    public ModelAndView moveUp(HttpServletRequest request,String rowId,Model model){
-        if(StringUtils.isBlank(rowId))
-            rowId = "";
-        boolean status = mdModuleService.moveUp(rowId);
-        if(status){
-            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
-            model.addAttribute("modules",modules);
-            return new ModelAndView("sysconf/moduleReconfig","model",model);
-        }
-        return new ModelAndView("sysconf/moduleReconfig","error", "fail");
-    }
-
+    /**
+     * 
+     * 说明 : 向上移动
+     * @param rowId
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： Administrator
+     */
     @RequestMapping("/moveupjson")
     @ResponseBody
     public  Map<String, Object> moveUpJson(String rowId){
@@ -71,16 +66,49 @@ public class MdModuleController {
         boolean status = mdModuleService.moveUp(rowId);
         Map<String, Object> resultMap = new HashMap<String, Object>();
         if(status){
-//            LinkedHashMap<MdModule, List<MdModule>> modules = mdModuleService.getAllModuleForKey("reconfig");
-//            List<Module> modulelist = mdModuleService.getAllModuleForKey();   
-//            resultMap.put("modules", modulelist);
-            //model.addAttribute("modules",modules);
-            resultMap.put("rowid", rowId);
-            resultMap.put("result",mdModuleService.getAllModuleForKey());
-            return resultMap;
+            resultMap = moveResult(rowId);
+        }else{
+            resultMap.put("error", "fail");
         }
-        resultMap.put("error", "fail");
+        return resultMap;
+    }
+ 
+    /**
+     * 
+     * 说明 : 向下移动
+     * @param rowId
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
+    @RequestMapping("/movedownjson")
+    @ResponseBody
+    public  Map<String, Object> moveDownJson(String rowId){
+        if(StringUtils.isBlank(rowId))
+            rowId = "";
+        boolean status = mdModuleService.moveDown(rowId);
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if(status){
+            resultMap = moveResult(rowId);
+        }else{
+            resultMap.put("error", "fail");
+        }
         return resultMap;
     }
     
+    /**
+     * 
+     * 说明 : 成功移动结点后的结果数据
+     * @param rowId
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
+    public  Map<String, Object> moveResult(String rowId){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        resultMap.put("rowid", rowId);
+        resultMap.put("result",mdModuleService.getAllModuleForKey());
+        return resultMap;
+    }
+
 }

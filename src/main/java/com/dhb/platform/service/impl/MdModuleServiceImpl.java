@@ -56,17 +56,29 @@ public class MdModuleServiceImpl implements IMdModuleService {
         return resultModuleMap;
     }
 
-    @Override
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForMenu() {
         return null;
     }
 
-    @Override
+    /**
+     * 
+     * 说明        : 已配置所有模块查询
+     * @return
+     * 创建日期 ： 2017年7月4日
+     * 创建人     ： dhb
+     */
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected() {
         return null;
     }
 
-    @Override
+    /**
+     * 
+     * 说明      ： 向上移动
+     * @param rowId
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
     public boolean moveUp(String rowId) {
         boolean status = false;
         MdModule module = dao.selectModuleByPrimaryKey(rowId);
@@ -77,6 +89,14 @@ public class MdModuleServiceImpl implements IMdModuleService {
         return status;
     }
     
+    /**
+     * 
+     * 说明      ： 向下移动
+     * @param rowId
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
     public boolean moveDown(String rowId) {
         boolean status = false;
         MdModule module = dao.selectModuleByPrimaryKey(rowId);
@@ -97,17 +117,23 @@ public class MdModuleServiceImpl implements IMdModuleService {
             dao.updateByPrimaryKey(module);
             dao.updateByPrimaryKey(moduleold);
             status = true;
-            return status;
         }catch(Exception ex){
             ex.printStackTrace();
         }
         return status;
     }
-    
-    public LinkedHashMap<String, Object> getAllModuleForKey() {
+
+    /**
+     * 
+     * 说明 : 系统中所有模块查询，包装一级为map-key，二级为map-value
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
+    public Map<String, Object> getAllModuleForKey() {
         //一级模块（上级结点为0）
         Map<String, Object> params = new HashMap<String, Object>();
-        LinkedHashMap<String, Object> resultMap = new LinkedHashMap<String, Object>();
+        Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
         params.put("parentRowid", "0");
 
         List<MdModule> firstModules = dao.selectModuleByParams(params);
