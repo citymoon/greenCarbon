@@ -1,10 +1,9 @@
 package com.dhb.platform.entity;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 public class MdModule {
-    private Long rowId;
+    private String rowId;
 
     private String mdName;
 
@@ -12,23 +11,23 @@ public class MdModule {
 
     private String parentRowid;
 
-    private BigDecimal selectedFlag;
+    private String selectedFlag;
 
     private String mdNewName;
 
-    private BigDecimal showSequence;
+    private String showSequence;
 
     private String mdUrl;
 
-    private BigDecimal isSystemMd;
+    private String isSystemMd;
 
-    private BigDecimal haveChild;
+    private String haveChild;
 
-    private BigDecimal intranetFlag;
+    private String intranetFlag;
 
-    private BigDecimal oasysFlag;
+    private String oasysFlag;
 
-    private BigDecimal activeFlag;
+    private String activeFlag;
 
     private Date createDate;
 
@@ -44,11 +43,11 @@ public class MdModule {
 
     private String attribute02;
 
-    public Long getRowId() {
+    public String getRowId() {
         return rowId;
     }
 
-    public void setRowId(Long rowId) {
+    public void setRowId(String rowId) {
         this.rowId = rowId;
     }
 
@@ -76,11 +75,11 @@ public class MdModule {
         this.parentRowid = parentRowid;
     }
 
-    public BigDecimal getSelectedFlag() {
+    public String getSelectedFlag() {
         return selectedFlag;
     }
 
-    public void setSelectedFlag(BigDecimal selectedFlag) {
+    public void setSelectedFlag(String selectedFlag) {
         this.selectedFlag = selectedFlag;
     }
 
@@ -92,11 +91,11 @@ public class MdModule {
         this.mdNewName = mdNewName == null ? null : mdNewName.trim();
     }
 
-    public BigDecimal getShowSequence() {
+    public String getShowSequence() {
         return showSequence;
     }
 
-    public void setShowSequence(BigDecimal showSequence) {
+    public void setShowSequence(String showSequence) {
         this.showSequence = showSequence;
     }
 
@@ -108,43 +107,43 @@ public class MdModule {
         this.mdUrl = mdUrl == null ? null : mdUrl.trim();
     }
 
-    public BigDecimal getIsSystemMd() {
+    public String getIsSystemMd() {
         return isSystemMd;
     }
 
-    public void setIsSystemMd(BigDecimal isSystemMd) {
+    public void setIsSystemMd(String isSystemMd) {
         this.isSystemMd = isSystemMd;
     }
 
-    public BigDecimal getHaveChild() {
+    public String getHaveChild() {
         return haveChild;
     }
 
-    public void setHaveChild(BigDecimal haveChild) {
+    public void setHaveChild(String haveChild) {
         this.haveChild = haveChild;
     }
 
-    public BigDecimal getIntranetFlag() {
+    public String getIntranetFlag() {
         return intranetFlag;
     }
 
-    public void setIntranetFlag(BigDecimal intranetFlag) {
+    public void setIntranetFlag(String intranetFlag) {
         this.intranetFlag = intranetFlag;
     }
 
-    public BigDecimal getOasysFlag() {
+    public String getOasysFlag() {
         return oasysFlag;
     }
 
-    public void setOasysFlag(BigDecimal oasysFlag) {
+    public void setOasysFlag(String oasysFlag) {
         this.oasysFlag = oasysFlag;
     }
 
-    public BigDecimal getActiveFlag() {
+    public String getActiveFlag() {
         return activeFlag;
     }
 
-    public void setActiveFlag(BigDecimal activeFlag) {
+    public void setActiveFlag(String activeFlag) {
         this.activeFlag = activeFlag;
     }
 

@@ -22,4 +22,8 @@ public interface MdModuleMapper {
     List<MdModule> selectModuleGrtShowSequence(String rowId);
     
     void updateByPrimaryKey(MdModule record);
+    
+    void updateIsConfigByPrimaryKeys(List<String> rowIds);
+    
+    void updateIsConfigByNotPrimaryKeys(List<String> rowIds);
 }

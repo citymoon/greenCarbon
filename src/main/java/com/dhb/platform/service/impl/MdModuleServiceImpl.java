@@ -1,6 +1,5 @@
 package com.dhb.platform.service.impl;
 
-import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -8,8 +7,9 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 import com.dhb.platform.dao.MdModuleMapper;
 import com.dhb.platform.entity.MdModule;
@@ -18,6 +18,8 @@ import com.dhb.platform.service.IMdModuleService;
 @Service
 public class MdModuleServiceImpl implements IMdModuleService {
     
+    private static final Logger log = LoggerFactory.getLogger(MdModuleServiceImpl.class);
+
     @Resource
     MdModuleMapper dao;
     
@@ -56,6 +58,13 @@ public class MdModuleServiceImpl implements IMdModuleService {
         return resultModuleMap;
     }
 
+    /**
+     * 
+     * 说明        : 主菜单查询方法，去除了未配置且没有子菜单的一级模块
+     * @return
+     * 创建日期 ： 2017年7月4日
+     * 创建人     ： dhb
+     */
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForMenu() {
         return null;
     }
@@ -111,7 +120,7 @@ public class MdModuleServiceImpl implements IMdModuleService {
         boolean status = false;
         try{
             MdModule moduleold = moduleList.get(0);
-            BigDecimal temp = module.getShowSequence();
+            String temp = module.getShowSequence();
             module.setShowSequence(moduleold.getShowSequence());
             moduleold.setShowSequence(temp);
             dao.updateByPrimaryKey(module);
@@ -146,4 +155,23 @@ public class MdModuleServiceImpl implements IMdModuleService {
         return resultMap;
     }
 
+    /**
+     * 
+     * 说明      ： 更新模块的是否配置属性
+     * @param rowIds  已选择的主键
+     * @return
+     * 创建日期： 2017年7月27日
+     * 创建人    ： dhb
+     */
+    public Map<String, Object> configComplete(List<String> rowIds) {
+        try {
+            dao.updateIsConfigByPrimaryKeys(rowIds);
+            dao.updateIsConfigByNotPrimaryKeys(rowIds);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return getAllModuleForKey();
+    }
+
+    
 }

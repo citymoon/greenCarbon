@@ -45,7 +45,7 @@
 				  </c:choose>
 		        </td>
 		        <td>
-		        <input type="checkbox" name="selectedFlag" value="${map.key.selectedFlag }" 
+		        <input type="checkbox" name="selectedFlag" value="${map.key.rowId }" 
                   <c:choose>
                     <c:when test="${map.key.selectedFlag == '1'}">
                       <c:out value="checked='checked'"></c:out>
@@ -74,7 +74,7 @@
                   </c:choose>
                 </td>
                 <td>
-                  <input type="checkbox" name="selectedFlag" value="1" 
+                  <input type="checkbox" name="selectedFlag" value="${module.rowId }" 
                   <c:choose>
                     <c:when test="${module.selectedFlag == '1'}">
                       <c:out value="checked='checked'"></c:out>
@@ -130,7 +130,7 @@ $(document).ready(function () {
                 success : function(data) {
                     //alert('保存成功！',{icon: 6});
                     if(data != null){
-                    	moveNode(data);
+                    	resultDataView(data);
                     }
                 },
                 error : function(){
@@ -157,7 +157,7 @@ $(document).ready(function () {
                 success : function(data) {
                     //alert('保存成功！',{icon: 6});
                     if(data != null){
-                        moveNode(data);
+                    	resultDataView(data);
                     }
                 },
                 error : function(){
@@ -169,14 +169,40 @@ $(document).ready(function () {
 	$("#ok").click(function(){
 		var selected = '';
 		$('input:checkbox[name="selectedFlag"]:checked').each(function(){ 
-			selected += $(this).val();
+			selected += $(this).val()+',';
 		}) 
-		console.log(selected);
+		if(selected.length>0){
+			selected = selected.substr(0,selected.length-1);
+            $.ajax({
+                type:'POST',
+                datatype:'json',
+                //url:"<%=ctxpath%>/module/moveup",
+                url:"<%=ctxpath%>/module/completejson",
+                //data : $("#sysform").serialize(),
+                data : "rowIds="+selected,
+                //contentType:"application/x-www-form-urlencoded",
+                success : function(data) {
+                    //alert('保存成功！',{icon: 6});
+                    if(data != null){
+                    	resultDataView(data);
+                    }
+                },
+                error : function(){
+                    parent.layer.alert('操作失败！',{icon: 2});
+                }
+            });
+		}else{
+			parent.layer.alert('您还没有配置任何模块！',{icon: 1});
+			return false;
+		}
 	});
-	function moveNode(data){
+	function resultDataView(data){
 		var i=0;
         var trs="";
         var rowid="",result="";
+        var moveselectflag = '';
+        var checkedflag = 'checked="checked"';
+        var intranetflag = '内部模块';
         $.each(data,function(name,value) {
             if(name == "rowid" && value != null)
                 rowid = value;
@@ -186,47 +212,56 @@ $(document).ready(function () {
         $.each(result,function(name,value) {
             i++;
             var keyString = name.split(',');
-            var moveselectflag = '';
             if(keyString[0] == rowid)
                 moveselectflag = 'checked="checked"';
-            var checkedflag = 'checked="checked"';
-            if(keyString[4] == 0)
+            else
+            	moveselectflag = '';
+            if(keyString[5] == 0)
                 checkedflag = '';
-            var intranetflag = '内部模块';
+            else
+            	checkedflag = 'checked="checked"';
             if(keyString[4] == '0')
                 intranetflag = '外部模块';
+            else
+            	intranetflag = '内部模块';
             trs += '<tr>';
             trs += '<td><input type="radio" value="'+keyString[0]+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'</label></td>';
             trs += '<td>'+keyString[1]+'</td>'
             trs += '<td>'+keyString[2]+'</td>'
             trs += '<td>'+keyString[3]+'</td>'
             trs += '<td>'+intranetflag+'</td>'
-            trs += '<td><input type="checkbox" name="selectedFlag" value="'+keyString[5]+'" '+checkedflag+'></td>'
+            trs += '<td><input type="checkbox" name="selectedFlag" value="'+keyString[0]+'" '+checkedflag+'></td>'
             trs += '</tr>'
             if(value.length>0){
                 var j=0;
                 $.each(value,function(key,valueson) {
                     j++;
-                    moveselectflag = '';
                     if(valueson.rowId == rowid)
                         moveselectflag = 'checked="checked"';
+                    else
+                        moveselectflag = '';
                     if(valueson.selectedFlag == 0)
                         checkedflag = '';
+                    else
+                        checkedflag = 'checked="checked"';
                     if(valueson.intranetFlag == '0')
                         intranetflag = '外部模块';
+                    else
+                        intranetflag = '内部模块';
                     trs += '<tr>';
                     trs += '<td><input type="radio" value="'+valueson.rowId+'" name="rowId" id="rowId" '+moveselectflag+'><label>'+i+'.'+j+'</label></td>';
                     trs += '<td>'+valueson.mdNewName+'</td>'
                     trs += '<td>'+valueson.mdName+'</td>'
                     trs += '<td>'+valueson.mdCode+'</td>'
                     trs += '<td>'+intranetflag+'</td>'
-                    trs += '<td><input type="checkbox" name="selectedFlag" value="'+valueson.selectedFlag+'" '+checkedflag+'></td>'
+                    trs += '<td><input type="checkbox" name="selectedFlag" value="'+valueson.rowId+'" '+checkedflag+'></td>'
                     trs += '</tr>'
                 });
             }
         });
         $('#mainTable').find('tbody').remove();
-        $("#mainTable").append(trs);
+        $('#mainTable').append(trs);
+        console.log(trs);
 	}
 });
 </script>

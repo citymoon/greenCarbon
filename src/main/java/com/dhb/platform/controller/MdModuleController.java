@@ -1,5 +1,6 @@
 package com.dhb.platform.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -34,7 +35,7 @@ public class MdModuleController {
      * @param model  
      * @return
      * 创建日期： 2017年7月5日
-     * 创建人    ： Administrator
+     * 创建人    ： dhb
      */
     @RequestMapping(value="/getAllModuleForKey/{key}")
     public ModelAndView getAllModuleForKey(@PathVariable("key") String key,Model model){
@@ -53,10 +54,10 @@ public class MdModuleController {
     /**
      * 
      * 说明 : 向上移动
-     * @param rowId
+     * @param rowId 主键
      * @return
      * 创建日期： 2017年7月26日
-     * 创建人    ： Administrator
+     * 创建人    ： dhb
      */
     @RequestMapping("/moveupjson")
     @ResponseBody
@@ -76,7 +77,7 @@ public class MdModuleController {
     /**
      * 
      * 说明 : 向下移动
-     * @param rowId
+     * @param rowId 主键
      * @return
      * 创建日期： 2017年7月26日
      * 创建人    ： dhb
@@ -99,7 +100,7 @@ public class MdModuleController {
     /**
      * 
      * 说明 : 成功移动结点后的结果数据
-     * @param rowId
+     * @param rowId 主键
      * @return
      * 创建日期： 2017年7月26日
      * 创建人    ： dhb
@@ -108,6 +109,31 @@ public class MdModuleController {
         Map<String, Object> resultMap = new HashMap<String, Object>();
         resultMap.put("rowid", rowId);
         resultMap.put("result",mdModuleService.getAllModuleForKey());
+        return resultMap;
+    }
+    
+    /**
+     * 
+     * 说明      ： 更新模块的是否配置属性
+     * @param rowIds  已选择的主键
+     * @return
+     * 创建日期： 2017年7月27日
+     * 创建人    ： dhb
+     */
+    @RequestMapping("/completejson")
+    @ResponseBody
+    public Map<String, Object> configComplete(String rowIds){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        List<String> tempRowids = new ArrayList<String>();
+        if(StringUtils.isBlank(rowIds)){
+            resultMap.put("result",mdModuleService.getAllModuleForKey());
+            return resultMap;
+        } else {
+            for (String rowid : rowIds.split(",")) {
+                tempRowids.add(rowid);
+            }
+        }
+        resultMap.put("result",mdModuleService.configComplete(tempRowids));
         return resultMap;
     }
 
