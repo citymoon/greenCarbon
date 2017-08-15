@@ -2,6 +2,7 @@ package com.dhb.platform.service.impl;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -78,6 +79,28 @@ public class MdModuleServiceImpl implements IMdModuleService {
      */
     public LinkedHashMap<MdModule, List<MdModule>> getAllModuleForSelected() {
         return null;
+    }
+
+    /**
+     * 
+     * 说明      ： 查询一级模块
+     * @param parentRowid=0
+     * @return
+     * 创建日期： 2017年7月28日
+     * 创建人    ： dhb
+     */
+    public Map<String, List<MdModule>> getFirstModule(){
+        //一级模块（上级结点为0）
+        Map<String, Object> params = new HashMap<String, Object>();
+        Map<String, List<MdModule>> resultModules = new HashMap<String, List<MdModule>>();
+        //一级内部模块
+        params.put("parentRowid", "0");
+        params.put("intranetFlag", "1");
+        resultModules.put("firstInnerModules",dao.selectModuleByParams(params));
+        //一级外部模块
+        params.put("intranetFlag", "0");
+        resultModules.put("firstOuterModules",dao.selectModuleByParams(params));
+        return resultModules;
     }
 
     /**

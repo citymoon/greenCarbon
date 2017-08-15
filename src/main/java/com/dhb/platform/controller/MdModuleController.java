@@ -136,5 +136,13 @@ public class MdModuleController {
         resultMap.put("result",mdModuleService.configComplete(tempRowids));
         return resultMap;
     }
+    
+    @RequestMapping("/addmodule")
+    public ModelAndView addModule(Model model){
+        Map<String, List<MdModule>> firstModules = mdModuleService.getFirstModule();
+        model.addAttribute("firstModules", firstModules);
+        return new ModelAndView("sysconf/addmodule","model",model);
+        
+    }
 
 }

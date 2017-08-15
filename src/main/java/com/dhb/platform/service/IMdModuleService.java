@@ -46,6 +46,16 @@ public interface IMdModuleService {
     
     /**
      * 
+     * 说明      ： 查询一级模块
+     * @param parentRowid=0
+     * @return
+     * 创建日期： 2017年7月28日
+     * 创建人    ： dhb
+     */
+    public Map<String, List<MdModule>> getFirstModule();
+    
+    /**
+     * 
      * 说明      ： 向上移动
      * @param rowId  主键
      * @return

@@ -13,6 +13,14 @@ public interface MdModuleMapper {
 
     int insertSelective(MdModule record);
     
+    /**
+     * 
+     * 说明      ： 根据参数列表查询模块
+     * @param params--parentRowid,selectedFlag,haveChild,intranetFlag
+     * @return
+     * 创建日期： 2017年7月28日
+     * 创建人    ： dhb
+     */
     List<MdModule> selectModuleByParams(Map<String, Object> params);
     
     MdModule selectModuleByPrimaryKey(String rowId);

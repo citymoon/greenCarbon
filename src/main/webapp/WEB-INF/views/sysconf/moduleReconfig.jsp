@@ -94,11 +94,11 @@
         <div class="col-xs-8 col-sm-9 col-xs-offset-5 col-sm-offset-5">
             <a href="#"><button class="btn btn-primary radius" id="up"><i class="fa fa-arrow-circle-up"></i>上移</button></a>
             <a href="#"><button class="btn btn-primary radius" id="down"><i class="fa fa-arrow-circle-down"></i>下移</button></a>
-            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-plus-circle"></i>增加</button></a>
+            <a href="${ctx}/module/addmodule"><button class="btn btn-primary radius"><i class="fa fa-plus-circle"></i>增加</button></a>
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-pencil-square"></i>修改</button></a>
             <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-minus-circle"></i>删除</button></a>
             <a href="#"><button class="btn btn-primary radius" id="ok"><i class="fa fa-wrench"></i>完成</button></a>
-            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-reply"></i>返回</button></a>
+            <a href="${ctx}/module/getAllModuleForKey/conf"><button class="btn btn-primary radius"><i class="fa fa-reply"></i>返回</button></a>
         </div>
     </div>
 </div>
@@ -182,10 +182,10 @@ $(document).ready(function () {
                 data : "rowIds="+selected,
                 //contentType:"application/x-www-form-urlencoded",
                 success : function(data) {
-                    //alert('保存成功！',{icon: 6});
                     if(data != null){
                     	resultDataView(data);
                     }
+                    parent.layer.alert('保存成功！',{icon: 6});
                 },
                 error : function(){
                     parent.layer.alert('操作失败！',{icon: 2});

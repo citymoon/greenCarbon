@@ -35,10 +35,13 @@
     from MD_MODULE
     where PARENT_ROWID = '${parentRowid}' and ACTIVE_FLAG = '1' 
     <if test="selectedFlag != null">
-        AND SELECTED_FLAG = '1'
+        AND SELECTED_FLAG = '${selectedFlag}'
     </if>
     <if test="haveChild != null">
         AND HAVE_CHILD = '${haveChild}'
+    </if>
+    <if test="intranetFlag != null">
+        AND INTRANET_FLAG = '${intranetFlag}'
     </if>
     ORDER BY SHOW_SEQUENCE ASC
   </select>
