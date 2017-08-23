@@ -1,12 +1,14 @@
 package com.dhb.platform.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import com.dhb.platform.dao.MdModuleMapper;
 import com.dhb.platform.entity.MdModule;
 import com.dhb.platform.service.IMdModuleService;
+import com.dhb.platform.service.IOaKeysTab;
 
 @Service
 public class MdModuleServiceImpl implements IMdModuleService {
@@ -23,6 +26,9 @@ public class MdModuleServiceImpl implements IMdModuleService {
 
     @Resource
     MdModuleMapper dao;
+    
+    @Resource
+    IOaKeysTab oaKeysTabService;
     
     /**
      * 
@@ -196,5 +202,57 @@ public class MdModuleServiceImpl implements IMdModuleService {
         return getAllModuleForKey();
     }
 
-    
+    /**
+     * 
+     * 说明      ： 增加新模块
+     * @param request
+     * @return 是否成功的标志
+     * 创建日期： 2017年8月16日
+     * 创建人    ： dhb
+     */
+    public Map<String, Object> addModule(HttpServletRequest request) {
+        String status = "";
+        MdModule module = new MdModule();
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            //初始化保存的对象
+            module.setRowId(oaKeysTabService.selectRowidFromTableName("MD_MODULE"));
+            module.setMdName(request.getParameter("mdNewName").toString());
+            module.setMdNewName(request.getParameter("mdNewName").toString());
+            module.setMdCode(request.getParameter("mdCode").toString());
+            module.setMdUrl(request.getParameter("mdUrl").toString());
+            String parentrowid ="";
+            if(request.getParameter("moduleLevel").toString().equalsIgnoreCase("1")){
+                module.setParentRowid("0");
+                parentrowid = "0";
+            }else{
+                module.setParentRowid(request.getParameter("firstModule").toString());
+                parentrowid = request.getParameter("firstModule").toString();
+            }
+            module.setShowSequence(parentrowid);
+            module.setSelectedFlag("1");
+            module.setIsSystemMd("1");
+            module.setHaveChild("0");
+            module.setIntranetFlag(request.getParameter("intranetFlag").toString());
+            module.setOasysFlag("0");
+            module.setActiveFlag("1");
+            
+            Date objDate=new Date();
+            SimpleDateFormat objFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datestrString = objFormat.format(objDate);
+            module.setCreateDate(objFormat.parse(datestrString));
+            
+            //查重判断(名称、编码、URL)
+            if(dao.selectRepeatModuleByParams(module).size()>0){
+                resultMap.put("status", "repeat");
+                resultMap.put("params", module);
+            }else{
+                dao.insertSelective(module);
+                resultMap.put("status", "success");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
 }

@@ -25,9 +25,13 @@ public interface MdModuleMapper {
     
     MdModule selectModuleByPrimaryKey(String rowId);
     
+    List<MdModule> selectRepeatModuleByParams(MdModule mdModule);
+    
     List<MdModule> selectModuleLessShowSequence(String rowId);
     
     List<MdModule> selectModuleGrtShowSequence(String rowId);
+    
+    String selectNewShowSequenceByParentRowid(String parentRowid);
     
     void updateByPrimaryKey(MdModule record);
     

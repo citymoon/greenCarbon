@@ -45,6 +45,13 @@
     </if>
     ORDER BY SHOW_SEQUENCE ASC
   </select>
+  <select id="selectRepeatModuleByParams" parameterType="com.dhb.platform.entity.MdModule" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from MD_MODULE
+    where ACTIVE_FLAG = '1' AND (MD_NAME = #{mdName,jdbcType=VARCHAR} OR MD_CODE = #{mdCode,jdbcType=VARCHAR} OR MD_URL = #{mdUrl,jdbcType=VARCHAR})
+    ORDER BY SHOW_SEQUENCE ASC
+  </select>
   <select id="selectModuleByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -71,6 +78,11 @@
     ]]>
     ORDER BY SHOW_SEQUENCE DESC
   </select>
+  <select id="selectNewShowSequenceByParentRowid" parameterType="java.lang.String" resultType="java.lang.String">
+    SELECT MAX(SHOW_SEQUENCE)+1 AS SHOW_SEQUENCE 
+    FROM MD_MODULE 
+    WHERE PARENT_ROWID=#{parentRowid,jdbcType=VARCHAR}
+  </select>
   <insert id="insert" parameterType="com.dhb.platform.entity.MdModule">
     insert into MD_MODULE (ROW_ID, MD_NAME, MD_CODE, 
       PARENT_ROWID, SELECTED_FLAG, MD_NEW_NAME, 
@@ -79,12 +91,12 @@
       ACTIVE_FLAG, CREATE_DATE, CREATE_BY, 
       LAST_UPDATE_DATE, LAST_UPDATE_BY, UPDATE_COUNT, 
       ATTRIBUTE01, ATTRIBUTE02)
-    values (#{rowId,jdbcType=DECIMAL}, #{mdName,jdbcType=VARCHAR}, #{mdCode,jdbcType=VARCHAR}, 
-      #{parentRowid,jdbcType=VARCHAR}, #{selectedFlag,jdbcType=DECIMAL}, #{mdNewName,jdbcType=VARCHAR}, 
-      #{showSequence,jdbcType=DECIMAL}, #{mdUrl,jdbcType=VARCHAR}, #{isSystemMd,jdbcType=DECIMAL}, 
-      #{haveChild,jdbcType=DECIMAL}, #{intranetFlag,jdbcType=DECIMAL}, #{oasysFlag,jdbcType=DECIMAL}, 
-      #{activeFlag,jdbcType=DECIMAL}, #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
-      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{updateCount,jdbcType=DECIMAL}, 
+    values (#{rowId,jdbcType=VARCHAR}, #{mdName,jdbcType=VARCHAR}, #{mdCode,jdbcType=VARCHAR}, 
+      #{parentRowid,jdbcType=VARCHAR}, #{selectedFlag,jdbcType=VARCHAR}, #{mdNewName,jdbcType=VARCHAR}, 
+      #{showSequence,jdbcType=VARCHAR}, #{mdUrl,jdbcType=VARCHAR}, #{isSystemMd,jdbcType=VARCHAR}, 
+      #{haveChild,jdbcType=VARCHAR}, #{intranetFlag,jdbcType=VARCHAR}, #{oasysFlag,jdbcType=VARCHAR}, 
+      #{activeFlag,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{createBy,jdbcType=VARCHAR}, 
+      #{lastUpdateDate,jdbcType=TIMESTAMP}, #{lastUpdateBy,jdbcType=VARCHAR}, #{updateCount,jdbcType=VARCHAR}, 
       #{attribute01,jdbcType=VARCHAR}, #{attribute02,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.dhb.platform.entity.MdModule">

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dhb.platform.dao.OaKeysTabMapper">
+  <resultMap id="BaseResultMap" type="com.dhb.platform.entity.OaKeysTab">
+    <result column="ROW_ID" jdbcType="DECIMAL" property="rowId" />
+    <result column="KEYTABLE" jdbcType="VARCHAR" property="keytable" />
+    <result column="KEYCOLUMN" jdbcType="VARCHAR" property="keycolumn" />
+    <result column="KEYMAXID" jdbcType="DECIMAL" property="keymaxid" />
+  </resultMap>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <select id="selectMaxId" parameterType="java.lang.String" resultType="java.util.HashMap">
+    select 
+    <![CDATA[
+        keymaxid,keymaxid+1 as keylpaded
+    ]]>
+    from OA_KEYS_TAB
+    where UPPER(keytable)=#{keytable,jdbcType=VARCHAR}
+  </select>
+  <insert id="insert" parameterType="com.dhb.platform.entity.OaKeysTab">
+    insert into OA_KEYS_TAB (ROW_ID, KEYTABLE, KEYCOLUMN, 
+      KEYMAXID)
+    values (#{rowId,jdbcType=DECIMAL}, #{keytable,jdbcType=VARCHAR}, #{keycolumn,jdbcType=VARCHAR}, 
+      #{keymaxid,jdbcType=DECIMAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dhb.platform.entity.OaKeysTab">
+    insert into OA_KEYS_TAB
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rowId != null">
+        ROW_ID,
+      </if>
+      <if test="keytable != null">
+        KEYTABLE,
+      </if>
+      <if test="keycolumn != null">
+        KEYCOLUMN,
+      </if>
+      <if test="keymaxid != null">
+        KEYMAXID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rowId != null">
+        #{rowId,jdbcType=DECIMAL},
+      </if>
+      <if test="keytable != null">
+        #{keytable,jdbcType=VARCHAR},
+      </if>
+      <if test="keycolumn != null">
+        #{keycolumn,jdbcType=VARCHAR},
+      </if>
+      <if test="keymaxid != null">
+        #{keymaxid,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateMaxid" parameterType="java.lang.String">
+    update OA_KEYS_TAB
+    set KEYMAXID = KEYMAXID+1
+    where KEYTABLE = #{tableName,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByExampleSelective" parameterType="map">
+    update OA_KEYS_TAB
+    <set>
+      <if test="record.rowId != null">
+        ROW_ID = #{record.rowId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.keytable != null">
+        KEYTABLE = #{record.keytable,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keycolumn != null">
+        KEYCOLUMN = #{record.keycolumn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.keymaxid != null">
+        KEYMAXID = #{record.keymaxid,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update OA_KEYS_TAB
+    set ROW_ID = #{record.rowId,jdbcType=DECIMAL},
+      KEYTABLE = #{record.keytable,jdbcType=VARCHAR},
+      KEYCOLUMN = #{record.keycolumn,jdbcType=VARCHAR},
+      KEYMAXID = #{record.keymaxid,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

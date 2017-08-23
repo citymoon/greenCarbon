@@ -133,13 +133,6 @@ $(document).ready(function () {
 			sysUrl:{
 				required:true
 			}
-		},
-		onkeyup:false,
-		focusCleanup:true,
-		success:"valid",
-		submitHandler:function(form){
-			$("#modal-shenqing-success").modal("show");
-			$(form).ajaxSubmit();
 		}
 	});
 });

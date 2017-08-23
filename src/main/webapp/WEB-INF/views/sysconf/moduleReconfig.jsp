@@ -155,7 +155,6 @@ $(document).ready(function () {
                 data : "rowId="+selected,
                 //contentType:"application/x-www-form-urlencoded",
                 success : function(data) {
-                    //alert('保存成功！',{icon: 6});
                     if(data != null){
                     	resultDataView(data);
                     }

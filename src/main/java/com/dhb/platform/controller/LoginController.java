@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.dhb.platform.entity.JbdpUser;
+import com.dhb.platform.service.IMdModuleService;
 import com.dhb.platform.service.IUserInfoService;
+import com.dhb.platform.service.impl.MdModuleServiceImpl;
 
 @Controller
 @RequestMapping("/login")
@@ -66,7 +68,7 @@ public class LoginController {
 				//jdbcTemplate
 				//return new ModelAndView(successPageUrl,"users",service.getAllUsers());
 //				return new ModelAndView(successPageUrl,"users",service.getAllUsersByMybatis());
-			    return new ModelAndView(successPageUrl);
+			    return new ModelAndView("forward:/module/getAllModuleForKey/menu");
 			}
 		}
 	}

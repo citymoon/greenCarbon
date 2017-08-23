@@ -144,5 +144,11 @@ public class MdModuleController {
         return new ModelAndView("sysconf/addmodule","model",model);
         
     }
+    
+    @RequestMapping("/addmoduleok")
+    @ResponseBody
+    public Map<String, Object> addModuleOk(HttpServletRequest request){
+        return mdModuleService.addModule(request);
+    }
 
 }

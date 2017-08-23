@@ -4,6 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.dhb.platform.entity.MdModule;
 
 public interface IMdModuleService {
@@ -48,7 +50,7 @@ public interface IMdModuleService {
      * 
      * 说明      ： 查询一级模块
      * @param parentRowid=0
-     * @return
+     * @return 
      * 创建日期： 2017年7月28日
      * 创建人    ： dhb
      */
@@ -58,7 +60,7 @@ public interface IMdModuleService {
      * 
      * 说明      ： 向上移动
      * @param rowId  主键
-     * @return
+     * @return 是否成功的标志
      * 创建日期： 2017年7月26日
      * 创建人    ： dhb
      */
@@ -68,7 +70,7 @@ public interface IMdModuleService {
      * 
      * 说明      ： 向下移动
      * @param rowId  主键
-     * @return
+     * @return 是否成功的标志
      * 创建日期： 2017年7月26日
      * 创建人    ： dhb
      */
@@ -78,10 +80,19 @@ public interface IMdModuleService {
      * 
      * 说明      ： 更新模块的是否配置属性
      * @param rowIds  已选择的主键
-     * @return
+     * @return 返回配置完成后的新结果集
      * 创建日期： 2017年7月27日
      * 创建人    ： dhb
      */
     public Map<String, Object> configComplete(List<String> rowIds);
 
+    /**
+     * 
+     * 说明      ： 增加新模块
+     * @param request
+     * @return 是否成功的标志
+     * 创建日期： 2017年8月16日
+     * 创建人    ： dhb
+     */
+    public Map<String, Object> addModule(HttpServletRequest request);
 }
