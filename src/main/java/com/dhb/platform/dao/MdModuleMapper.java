@@ -38,4 +38,8 @@ public interface MdModuleMapper {
     void updateIsConfigByPrimaryKeys(List<String> rowIds);
     
     void updateIsConfigByNotPrimaryKeys(List<String> rowIds);
+    
+    void updateByParams(MdModule mdModule);
+    
+    void deleteByPrimaryKey(String rowId);
 }

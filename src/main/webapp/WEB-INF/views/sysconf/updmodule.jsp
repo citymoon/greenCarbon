@@ -13,10 +13,13 @@
             <div class="ibox float-e-margins">
                 <div class="ibox-content">
            	        <form method="post" class="form-horizontal" id="moduleform">
+						<input type="hidden" id="rowId" name="rowId" value="${model.module.rowId}"/>
+						<input type="hidden" id="intranetFlagHidden" value="${model.module.intranetFlag}"/>
+						<input type="hidden" id="moduleLevelHidden" value="${model.module.parentRowid}"/>
 		              <div class="form-group">
                          <label class="col-sm-2 control-label"><span class="c-red">*</span>内外模块标志：</label>
                          <div class="col-sm-10">
-                            <label><input type="radio" value="1" id="intranetFlag1" name="intranetFlag" checked="checked">内部模块</label>
+                            <label><input type="radio" value="1" id="intranetFlag1" name="intranetFlag">内部模块</label>
                             <label><input type="radio" value="0" id="intranetFlag2" name="intranetFlag">外部模块</label>
                          </div>
                       </div>
@@ -26,7 +29,7 @@
 							模块层次标志：</label>
 						<div class="col-sm-10">
                             <label><input type="radio" value="1" id="moduleLevel1" name="moduleLevel">一级模块</label>
-                            <label><input type="radio" value="2" id="moduleLevel2" name="moduleLevel" checked="checked">二级模块</label>
+                            <label><input type="radio" value="2" id="moduleLevel2" name="moduleLevel">二级模块</label>
 						</div>
 					  </div>
 					  <div class="form-group">
@@ -49,7 +52,7 @@
 							<span class="c-red">*</span>
 							模块名称：</label>
 						<div class="col-sm-10">
-							<input type="text" id="mdNewName" name="mdNewName" value="" placeholder="输入模块的中文名字" class="form-control">
+							<input type="text" id="mdNewName" name="mdNewName" value="${model.module.mdNewName}" placeholder="输入模块的中文名字" class="form-control">
 						</div>
 					  </div>
 					  <div class="form-group">
@@ -57,7 +60,7 @@
 							<span class="c-red">*</span>
 							模块编码：</label>
 						<div class="col-sm-10">
-							<input type="text" id="mdCode" name="mdCode" value="" placeholder="输入模块编码" class="form-control">
+							<input type="text" id="mdCode" name="mdCode" value="${model.module.mdCode}" placeholder="输入模块编码" class="form-control">
 						</div>
 					  </div>
 					  <div class="form-group">
@@ -65,7 +68,7 @@
 							<span class="c-red">*</span>
 							链接地址：</label>
 						<div class="col-sm-10">
-							<input type="text" id="mdUrl" name="mdUrl" value="" placeholder="输入模块的链接地址" class="form-control">
+							<input type="text" id="mdUrl" name="mdUrl" value="${model.module.mdUrl}" placeholder="输入模块的链接地址" class="form-control">
 						</div>
 					  </div>
 					  <div class="form-group">
@@ -104,22 +107,39 @@
 <script type="text/javascript">
 $(document).ready(function () {
 	var icon = "<i class='fa fa-times-circle'></i> ";
-	$('#conSub').click(function(){
-		//alert($("#moduleform").validate().errorList.length);
-		var flag = 1;
-		//非空和长度判断
-		if($.trim($('#mdNewName').val()).length<=0 || $.trim($('#domain_name').val()).length>100){
-			flag = 0;
-		}else if($.trim($('#mdCode').val()).length<=0 || $.trim($('#mdCode').val()).length>50){
-			flag = 0;
-		}else if($.trim($('#mdUrl').val()).length<=0){
-        	flag = 0;
+    
+    //页面赋值
+    var intranetFlagHidden = $("#intranetFlagHidden").val();
+    var moduleLevelHidden = $("#moduleLevelHidden").val();
+    if(intranetFlagHidden == 1){
+        $("#intranetFlag1").attr("checked","checked");
+    }else{
+        $("#intranetFlag2").attr("checked","checked");
+    }
+    if(moduleLevelHidden == 0){
+        $('#moduleLevel1').attr("checked","checked");
+        $('#firstModule').attr("disabled","disabled");
+    }else{
+        //$('#moduleLevel1').removeAttr("checked");
+        $('#moduleLevel2').attr("checked","checked");
+        $("#firstModule option[value='"+moduleLevelHidden+"']").attr("selected","selected");
+    }
+    
+    $('#conSub').click(function(){
+    	var flag = 1;
+        //非空和长度判断
+        if($.trim($('#mdNewName').val()).length<=0 || $.trim($('#domain_name').val()).length>100){
+            flag = 0;
+        }else if($.trim($('#mdCode').val()).length<=0 || $.trim($('#mdCode').val()).length>50){
+            flag = 0;
+        }else if($.trim($('#mdUrl').val()).length<=0){
+            flag = 0;
         }else if($("input[name='moduleLevel']:checked").val()==2 && $("input[name='intranetFlag']:checked").val()==1 && $('#firstModule').val()==0){
-		    //内部模块，二级模块，但未选择所属一级模块
-		    flag = 0;
-			parent.layer.alert('选择了二级模块，但未选择"所属一级模块"！',{icon: 0});
-			return false;
-		};
+            //内部模块，二级模块，但未选择所属一级模块
+            flag = 0;
+            parent.layer.alert('选择了二级模块，但未选择"所属一级模块"！',{icon: 0});
+            return false;
+        };
 		//***submit()提交
 		//$('#moduleform').attr("action","<%=ctxpath%>/module/addmoduleok");
 		//$('#moduleform').submit();
@@ -131,9 +151,10 @@ $(document).ready(function () {
 	               datatype:'text',
 	               async:false,
 	               cache:false,
-	               url:"<%=ctxpath%>/module/addmoduleok",
+	               url:"<%=ctxpath%>/module/updmoduleok",
 	               data : $("#moduleform").serialize(),
 	               success : function(data) {
+	            	   alert(data.status);
 	               	if(data.status == "repeat"){
 	               		if(data.params.intranetFlag == 1){
 	               			$("#intranetFlag1").attr("checked","checked");
@@ -159,8 +180,9 @@ $(document).ready(function () {
 	               error : function(){
 	                   parent.layer.alert('保存失败！',{icon: 2});
 	               }
-            });
+	        });
 		}
+
     });
     $("input[name='intranetFlag']").bind("click",function(){
     	var selectedvalue = $(this).val();  

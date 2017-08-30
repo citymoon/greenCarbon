@@ -49,7 +49,7 @@
     select 
     <include refid="Base_Column_List" />
     from MD_MODULE
-    where ACTIVE_FLAG = '1' AND (MD_NAME = #{mdName,jdbcType=VARCHAR} OR MD_CODE = #{mdCode,jdbcType=VARCHAR} OR MD_URL = #{mdUrl,jdbcType=VARCHAR})
+    where ACTIVE_FLAG = '1' AND ROW_ID != #{rowId,jdbcType=VARCHAR} AND (MD_NAME = #{mdName,jdbcType=VARCHAR} OR MD_CODE = #{mdCode,jdbcType=VARCHAR} OR MD_URL = #{mdUrl,jdbcType=VARCHAR})
     ORDER BY SHOW_SEQUENCE ASC
   </select>
   <select id="selectModuleByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
@@ -247,4 +247,13 @@
         #{item}    
       </foreach>  
   </update>
+  <update id="updateByParams" parameterType="com.dhb.platform.entity.MdModule">
+      update MD_MODULE
+      set INTRANET_FLAG=#{intranetFlag,jdbcType=VARCHAR},PARENT_ROWID=#{parentRowid,jdbcType=VARCHAR},MD_NEW_NAME=#{mdNewName,jdbcType=VARCHAR},MD_CODE=#{mdCode,jdbcType=VARCHAR},MD_URL=#{mdUrl,jdbcType=VARCHAR},LAST_UPDATE_DATE=#{lastUpdateDate,jdbcType=TIMESTAMP}
+      where ROW_ID = #{rowId,jdbcType=VARCHAR}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from MD_MODULE where ROW_ID=#{rowId,jdbcType=VARCHAR}
+  </delete>
+  
 </mapper>

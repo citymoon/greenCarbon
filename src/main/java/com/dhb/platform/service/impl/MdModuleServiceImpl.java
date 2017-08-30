@@ -160,6 +160,17 @@ public class MdModuleServiceImpl implements IMdModuleService {
         }
         return status;
     }
+    
+    public boolean delModuleByPrimaryKey(String rowId){
+        boolean status = false;
+        try{
+            dao.deleteByPrimaryKey(rowId);
+            status = true;
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+        return status;
+    }
 
     /**
      * 
@@ -211,7 +222,6 @@ public class MdModuleServiceImpl implements IMdModuleService {
      * 创建人    ： dhb
      */
     public Map<String, Object> addModule(HttpServletRequest request) {
-        String status = "";
         MdModule module = new MdModule();
         Map<String, Object> resultMap = new HashMap<String, Object>();
         try{
@@ -255,4 +265,53 @@ public class MdModuleServiceImpl implements IMdModuleService {
         }
         return resultMap;
     }
+    
+    
+    public Map<String, Object> updModule(HttpServletRequest request) {
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        try{
+            MdModule module = dao.selectModuleByPrimaryKey(request.getParameter("rowId").toString());
+            module.setIntranetFlag(request.getParameter("intranetFlag").toString());
+            module.setMdNewName(request.getParameter("mdNewName").toString());
+            module.setMdCode(request.getParameter("mdCode").toString());
+            module.setMdUrl(request.getParameter("mdUrl").toString());
+            Date objDate=new Date();
+            SimpleDateFormat objFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String datestrString = objFormat.format(objDate);
+            module.setLastUpdateDate(objFormat.parse(datestrString));
+            if(request.getParameter("moduleLevel").toString().equalsIgnoreCase("1")){
+                module.setParentRowid("0");
+            }else{
+                module.setParentRowid(request.getParameter("firstModule").toString());
+            }
+
+            //查重判断(名称、编码、URL)
+            if(dao.selectRepeatModuleByParams(module).size()>0){
+                resultMap.put("status", "repeat");
+                resultMap.put("params", module);
+            }else{
+                dao.updateByParams(module);
+                resultMap.put("status", "success");
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return resultMap;
+    }
+    
+    /**
+     * 
+     * 说明      ： 根据主键查询模块
+     * @param rowId
+     * @return
+     * 创建日期： 2017年8月23日
+     * 创建人    ： dhb
+     */
+    public MdModule getModuleByPrimaryKey(String rowId) {
+        MdModule mdModule = dao.selectModuleByPrimaryKey(rowId); 
+        return mdModule;
+    }
+    
+    
 }

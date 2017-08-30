@@ -48,6 +48,16 @@ public interface IMdModuleService {
     
     /**
      * 
+     * 说明      ： 根据主键查询模块
+     * @param rowId
+     * @return
+     * 创建日期： 2017年8月23日
+     * 创建人    ： dhb
+     */
+    public MdModule getModuleByPrimaryKey(String rowId);
+    
+    /**
+     * 
      * 说明      ： 查询一级模块
      * @param parentRowid=0
      * @return 
@@ -95,4 +105,24 @@ public interface IMdModuleService {
      * 创建人    ： dhb
      */
     public Map<String, Object> addModule(HttpServletRequest request);
+    
+    /**
+     * 
+     * 说明      ： 修改模块
+     * @param request
+     * @return
+     * 创建日期： 2017年8月23日
+     * 创建人    ： dhb
+     */
+    public Map<String, Object> updModule(HttpServletRequest request);
+    
+    /**
+     * 
+     * 说明      ： 根据主键删除模块
+     * @param rowId
+     * @return
+     * 创建日期： 2017年8月24日
+     * 创建人    ： dhb
+     */
+    public boolean delModuleByPrimaryKey(String rowId);
 }

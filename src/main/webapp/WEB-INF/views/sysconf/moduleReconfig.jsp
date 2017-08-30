@@ -95,8 +95,8 @@
             <a href="#"><button class="btn btn-primary radius" id="up"><i class="fa fa-arrow-circle-up"></i>上移</button></a>
             <a href="#"><button class="btn btn-primary radius" id="down"><i class="fa fa-arrow-circle-down"></i>下移</button></a>
             <a href="${ctx}/module/addmodule"><button class="btn btn-primary radius"><i class="fa fa-plus-circle"></i>增加</button></a>
-            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-pencil-square"></i>修改</button></a>
-            <a href="${ctx}/module/getAllModuleForKey/reConfig"><button class="btn btn-primary radius"><i class="fa fa-minus-circle"></i>删除</button></a>
+            <a href="${ctx}/module/updmodule" id="upda"><button class="btn btn-primary radius" id="upd"><i class="fa fa-pencil-square"></i>修改</button></a>
+            <a href="#"><button class="btn btn-primary radius" id="del"><i class="fa fa-minus-circle"></i>删除</button></a>
             <a href="#"><button class="btn btn-primary radius" id="ok"><i class="fa fa-wrench"></i>完成</button></a>
             <a href="${ctx}/module/getAllModuleForKey/conf"><button class="btn btn-primary radius"><i class="fa fa-reply"></i>返回</button></a>
         </div>
@@ -195,6 +195,42 @@ $(document).ready(function () {
 			return false;
 		}
 	});
+	$("#upd").click(function(){
+        var selected = $('input:radio[name="rowId"]:checked').val();
+        if(selected == null) {
+            parent.layer.alert('没有选中项！',{icon: 0});
+            return false;
+        }else{
+        	var val = $("#upda").attr("href");
+        	$("#upda").attr("href",val+"/"+selected);
+        }
+	});
+    $("#del").click(function(){
+        var selected = $('input:radio[name="rowId"]:checked').val();
+        if(selected == null) {
+            parent.layer.alert('没有选中项！',{icon: 0});
+            return false;
+        } else {
+            $.ajax({
+                type:'POST',
+                datatype:'json',
+                //url:"<%=ctxpath%>/module/moveup",
+                url:"<%=ctxpath%>/module/deljson",
+                //data : $("#sysform").serialize(),
+                data : "rowId="+selected,
+                //contentType:"application/x-www-form-urlencoded",
+                success : function(data) {
+                    if(data != null){
+                    	parent.layer.alert('删除操作成功！',{icon: 1});
+                        resultDataView(data);
+                    }
+                },
+                error : function(){
+                    parent.layer.alert('删除操作失败！',{icon: 2});
+                }
+            });
+        }
+    });
 	function resultDataView(data){
 		var i=0;
         var trs="";
@@ -260,7 +296,6 @@ $(document).ready(function () {
         });
         $('#mainTable').find('tbody').remove();
         $('#mainTable').append(trs);
-        console.log(trs);
 	}
 });
 </script>

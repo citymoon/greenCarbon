@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang.StringUtils;
+import org.springframework.dao.support.DaoSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -149,6 +150,47 @@ public class MdModuleController {
     @ResponseBody
     public Map<String, Object> addModuleOk(HttpServletRequest request){
         return mdModuleService.addModule(request);
+    }
+    
+    @RequestMapping("/updmodule/{id}")
+    public ModelAndView updModule(@PathVariable("id") String rowId,Model model){
+        Map<String, List<MdModule>> firstModules = mdModuleService.getFirstModule();
+        MdModule mdModule = mdModuleService.getModuleByPrimaryKey(rowId);
+        model.addAttribute("firstModules", firstModules);
+        model.addAttribute("module", mdModule);
+        return new ModelAndView("sysconf/updmodule","model",model);
+    }
+    
+    @RequestMapping("/updmoduleok")
+    @ResponseBody
+    public Map<String, Object> updModuleOk(HttpServletRequest request){
+        return mdModuleService.updModule(request);
+    }
+
+    /**
+     * 
+     * 说明 : 向上移动
+     * @param rowId 主键
+     * @return
+     * 创建日期： 2017年7月26日
+     * 创建人    ： dhb
+     */
+    @RequestMapping("/deljson")
+    @ResponseBody
+    public  Map<String, Object> delJson(String rowId){
+        Map<String, Object> resultMap = new HashMap<String, Object>();
+        if(StringUtils.isBlank(rowId)){
+            rowId = "";
+            resultMap.put("error", "fail");
+            return resultMap;
+        }
+        boolean status = mdModuleService.delModuleByPrimaryKey(rowId);
+        if(status){
+            resultMap.put("result",mdModuleService.getAllModuleForKey());
+        }else{
+            resultMap.put("error", "fail");
+        }
+        return resultMap;
     }
 
 }
